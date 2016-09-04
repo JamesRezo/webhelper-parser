@@ -9,10 +9,28 @@ Part of WebHelper, a Generic Httpd Configuration Helper.
 
 ## Usage
 
+Create a concrete class extending Parser :
 ```php
 use WebHelper\Parser\Parser;
 
-$parser = new Parser();
+class MyParser extends Parser
+{
+    public function getActiveConfig()
+    {
+        // ... code ...
+        $this->activeConfig = [ ... ];
+        // ... code ...
+
+        return $this->activeConfig;
+    }
+}
+```
+
+Use it :
+```php
+use MyParser;
+
+$parser = new MyParser();
 
 $parser->setConfigFile($someConfigFile);
 

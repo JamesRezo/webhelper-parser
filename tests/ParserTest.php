@@ -12,7 +12,6 @@
 namespace WebHelper\Test\Parser;
 
 use PHPUnit_Framework_TestCase;
-use WebHelper\Parser\Parser;
 
 class ParserTest extends PHPUnit_Framework_TestCase
 {
@@ -20,12 +19,7 @@ class ParserTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->parser = new Parser();
-    }
-
-    public function testParser()
-    {
-        $this->assertInstanceOf(Parser::class, $this->parser);
+        $this->parser = new TestParser();
     }
 
     public function dataReadConfigFile()

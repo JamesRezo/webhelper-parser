@@ -16,13 +16,13 @@ namespace WebHelper\Parser;
  *
  * @author James <james@rezo.net>
  */
-class Parser
+abstract class Parser implements ParserInterface
 {
     /** @var string configuration file */
     private $configFile = '';
 
     /** @var array active directives in an array */
-    private $activeConfig = [];
+    protected $activeConfig = [];
 
     /**
      * Last pasring attempt error number.
@@ -31,7 +31,7 @@ class Parser
      * 1 configuration file is not readable
      * 2 no active configuration lines found
      *
-     * @var integer
+     * @var int
      */
     private $lastError = 0;
 
@@ -62,15 +62,12 @@ class Parser
      *
      * @return array active config
      */
-    public function getActiveConfig()
-    {
-        return $this->activeConfig;
-    }
+    abstract public function getActiveConfig();
 
     /**
      * Getter for the last error number.
      *
-     * @return integer error number of the last parsing attempt
+     * @return int error number of the last parsing attempt
      */
     public function getLastError()
     {
@@ -94,14 +91,16 @@ class Parser
         $activeConfig = explode("\n", $activeConfig);
 
         $this->activeConfig = $this->deleteBlankLines($activeConfig);
+
         return !empty($this->activeConfig);
     }
 
     /**
      * Trim all blank lines.
      *
-     * @param  array  $activeConfig config file exploded in an array of lines
-     * @return array                an array cleaned of blank lines
+     * @param array $activeConfig config file exploded in an array of lines
+     *
+     * @return array an array cleaned of blank lines
      */
     private function deleteBlankLines(array $activeConfig = array())
     {
