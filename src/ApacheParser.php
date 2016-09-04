@@ -74,7 +74,7 @@ class ApacheParser extends BaseParser implements ParserInterface
      *
      * @param string $key          a container's name
      * @param array  $activeConfig a clean config array of lines
-     * @param string $lineConfig   a line
+     * @param string $lineConfig   the starting config line of the container
      *
      * @return array a container of directives
      *
