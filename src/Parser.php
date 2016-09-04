@@ -101,7 +101,7 @@ abstract class Parser implements ParserInterface
      *
      * @return bool true if active lines were found
      */
-    protected function parseConfigFile()
+    private function parseConfigFile()
     {
         $activeConfig = $this->getOriginalConfig();
 
