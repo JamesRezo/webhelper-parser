@@ -75,19 +75,42 @@ abstract class Parser implements ParserInterface
     }
 
     /**
+     * Getter for the content of the configuration file.
+     *
+     * @return string content of the configuration file
+     */
+    public function getOriginalConfig()
+    {
+        return file_get_contents($this->configFile);
+    }
+
+    /**
+     * Does some extra parsing before the active configs turns into an array.
+     *
+     * @param string $config a config file content
+     *
+     * @return string a config file content
+     */
+    protected function beforeExplode($config)
+    {
+        return $config;
+    }
+
+    /**
      * Comon parsing to both apache and nginx.
      *
      * @return bool true if active lines were found
      */
     protected function parseConfigFile()
     {
-        $activeConfig = file_get_contents($this->configFile);
+        $activeConfig = $this->getOriginalConfig();
 
         //delete commented lines and end line comments
         $activeConfig = preg_replace('/^\s*#.*/m', '', $activeConfig);
         $activeConfig = preg_replace('/^([^#]+)#.*/m', '$1', $activeConfig);
 
         //convert into an array
+        $activeConfig = $this->beforeExplode($activeConfig);
         $activeConfig = explode("\n", $activeConfig);
 
         $this->activeConfig = $this->deleteBlankLines($activeConfig);
