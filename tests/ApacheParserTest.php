@@ -34,7 +34,7 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
                 'ServerName localhost',
                 'DocumentRoot "/var/www/php"',
             ],
-            __DIR__.'/data/apache-no-multi-line.conf',
+            __DIR__.'/data/apache/no-multi-line.conf',
         ];
 
         $data['one multi line'] = [
@@ -47,7 +47,7 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
                     '</Directory>',
                 ],
             ],
-            __DIR__.'/data/apache-one-multi-line.conf',
+            __DIR__.'/data/apache/one-multi-line.conf',
         ];
 
         $data['nested multi lines'] = [
@@ -65,7 +65,7 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
                     '</IfModule>',
                 ],
             ],
-            __DIR__.'/data/apache-nested-multi-lines.conf',
+            __DIR__.'/data/apache/nested-multi-lines.conf',
         ];
 
         return $data;
@@ -84,6 +84,6 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
      */
     public function testApacheException()
     {
-        $this->parser->setConfigFile(__DIR__.'/data/apache-wrong-syntax.conf')->getActiveConfig();
+        $this->parser->setConfigFile(__DIR__.'/data/apache/wrong-syntax.conf')->getActiveConfig();
     }
 }
