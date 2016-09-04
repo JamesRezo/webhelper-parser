@@ -34,7 +34,7 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
                 'ServerName localhost',
                 'DocumentRoot "/var/www/php"',
             ],
-            __DIR__.'/data/apache-no-multi-line.conf'
+            __DIR__.'/data/apache-no-multi-line.conf',
         ];
 
         $data['one multi line'] = [
@@ -44,10 +44,10 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
                     '<Directory />',
                     'AllowOverride none',
                     'Require all denied',
-                    '</Directory>'
-                ]
+                    '</Directory>',
+                ],
             ],
-            __DIR__.'/data/apache-one-multi-line.conf'
+            __DIR__.'/data/apache-one-multi-line.conf',
         ];
 
         $data['nested multi lines'] = [
@@ -59,13 +59,13 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
                     [
                         '<IfModule logio_module>',
                         'LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio',
-                        '</IfModule>'
+                        '</IfModule>',
                     ],
                     'CustomLog "/var/log/apache2/access_log" common',
-                    '</IfModule>'
-                ]
+                    '</IfModule>',
+                ],
             ],
-            __DIR__.'/data/apache-nested-multi-lines.conf'
+            __DIR__.'/data/apache-nested-multi-lines.conf',
         ];
 
         return $data;

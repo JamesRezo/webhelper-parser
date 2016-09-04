@@ -36,9 +36,9 @@ class ApacheParser extends BaseParser implements ParserInterface
     /**
      * Does a nested array of lines depending on container Directives.
      *
-     * @param  array $activeConfig a clean config array of lines
+     * @param array $activeConfig a clean config array of lines
      *
-     * @return array               a nested array of lines
+     * @return array a nested array of lines
      */
     private function compile($activeConfig)
     {
@@ -55,10 +55,10 @@ class ApacheParser extends BaseParser implements ParserInterface
     /**
      * Looks for a container directive.
      *
-     * @param  array  $activeConfig a clean config array of lines
-     * @param  string $lineConfig   a line
+     * @param array  $activeConfig a clean config array of lines
+     * @param string $lineConfig   a line
      *
-     * @return mixed                a line or an array of line
+     * @return mixed a line or an array of line
      */
     private function subCompile(&$activeConfig, $lineConfig)
     {
@@ -72,13 +72,13 @@ class ApacheParser extends BaseParser implements ParserInterface
     /**
      * Finds the end of a container directive.
      *
-     * @param  string $key          a container's name
-     * @param  array  $activeConfig a clean config array of lines
-     * @param  string $lineConfig   a line
+     * @param string $key          a container's name
+     * @param array  $activeConfig a clean config array of lines
+     * @param string $lineConfig   a line
      *
-     * @return array                a container of directives
+     * @return array a container of directives
      *
-     * @throws ParserException      if a container does not end correctly
+     * @throws ParserException if a container does not end correctly
      */
     private function findEndingKey($key, &$activeConfig, $lineConfig)
     {

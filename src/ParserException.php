@@ -22,7 +22,7 @@ class ParserException extends DomainException
     public static function forEndingKeyNotFound($key)
     {
         return new self(sprintf(
-            "No ending directive for %s",
+            'No ending directive for %s',
             $key
         ));
     }
