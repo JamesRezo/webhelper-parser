@@ -15,6 +15,8 @@ namespace WebHelper\Parser;
 use WebHelper\Parser\Parser as BaseParser;
 
 /**
+ * Apache specific parser.
+ *
  * @author James <james@rezo.net>
  */
 class ApacheParser extends BaseParser implements ParserInterface
@@ -32,11 +34,11 @@ class ApacheParser extends BaseParser implements ParserInterface
     }
 
     /**
-     * [compile description]
+     * Does a nested array of lines depending on container Directives.
      *
-     * @param  [type] $activeConfig [description]
+     * @param  array $activeConfig a clean config array of lines
      *
-     * @return [type]               [description]
+     * @return array               a nested array of lines
      */
     private function compile($activeConfig)
     {
@@ -51,12 +53,12 @@ class ApacheParser extends BaseParser implements ParserInterface
     }
 
     /**
-     * [subCompile description]
+     * Looks for a container directive.
      *
-     * @param  [type] &$activeConfig [description]
-     * @param  [type] $lineConfig    [description]
+     * @param  array  $activeConfig a clean config array of lines
+     * @param  string $lineConfig   a line
      *
-     * @return [type]                [description]
+     * @return mixed                a line or an array of line
      */
     private function subCompile(&$activeConfig, $lineConfig)
     {
@@ -68,15 +70,15 @@ class ApacheParser extends BaseParser implements ParserInterface
     }
 
     /**
-     * [findEndingKey description]
+     * Finds the end of a container directive.
      *
-     * @param  [type] $key           [description]
-     * @param  [type] &$activeConfig [description]
-     * @param  [type] $lineConfig    [description]
+     * @param  string $key          a container's name
+     * @param  array  $activeConfig a clean config array of lines
+     * @param  string $lineConfig   a line
      *
-     * @return [type]                [description]
+     * @return array                a container of directives
      *
-     * @throws ParserException       if a container does not end correctly
+     * @throws ParserException      if a container does not end correctly
      */
     private function findEndingKey($key, &$activeConfig, $lineConfig)
     {
