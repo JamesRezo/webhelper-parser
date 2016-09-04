@@ -7,7 +7,23 @@ Part of WebHelper, a Generic Httpd Configuration Helper.
 
 ```composer require webhelper/parser```
 
-## Usage
+## Basic Usage
+
+```php
+use WebHelper\Parser\ApacheParser;
+
+$apache = new ApacheParser();
+
+$apache->setConfigFile($someConfigFile);
+
+if (!$apache->getLastError()) {
+    $activeConfig = $apache->getActiveConfig();
+}
+
+var_dump($activeConfig);
+```
+
+## Advanced Usage
 
 Create a concrete class extending Parser :
 ```php
