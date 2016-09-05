@@ -43,6 +43,8 @@ class NginxParser extends BaseParser implements ParserInterface
      */
     protected function beforeExplode($config)
     {
+        $config = parent::beforeExplode($config);
+
         $config = preg_replace('/\{\n?/m', "{\n", $config);
         $config = preg_replace('/\n?\}/m', "\n}", $config);
 

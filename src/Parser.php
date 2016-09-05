@@ -93,9 +93,24 @@ abstract class Parser implements ParserInterface
      */
     protected function beforeExplode($config)
     {
+        $config = $this->deleteComments($config);
+
         return $config;
     }
 
+    /**
+     * Does some extra parsing after the active configs has turned into an array.
+     *
+     * @param array $config a config file content
+     *
+     * @return array a config file content
+     */
+    protected function afterExplode($activeConfig)
+    {
+        $activeConfig = $this->deleteBlankLines($activeConfig);
+
+        return $activeConfig;
+    }
     /**
      * Comon parsing to both apache and nginx.
      *
@@ -104,18 +119,29 @@ abstract class Parser implements ParserInterface
     private function parseConfigFile()
     {
         $activeConfig = $this->getOriginalConfig();
-
-        //delete commented lines and end line comments
-        $activeConfig = preg_replace('/^\s*#.*/m', '', $activeConfig);
-        $activeConfig = preg_replace('/^([^#]+)#.*/m', '$1', $activeConfig);
+        $activeConfig = $this->beforeExplode($activeConfig);
 
         //convert into an array
-        $activeConfig = $this->beforeExplode($activeConfig);
         $activeConfig = explode("\n", $activeConfig);
 
-        $this->activeConfig = $this->deleteBlankLines($activeConfig);
+        $this->activeConfig = $this->afterExplode($activeConfig);
 
         return !empty($this->activeConfig);
+    }
+
+    /**
+     * Deletes commented lines and end line comments.
+     *
+     * @param  string $activeConfig a file content
+     *
+     * @return string               a file content without comments
+     */
+    private function deleteComments($config = '')
+    {
+        $config = preg_replace('/^\s*#.*/m', '', $config);
+        $config = preg_replace('/^([^#]+)#.*/m', '$1', $config);
+
+        return $config;
     }
 
     /**
