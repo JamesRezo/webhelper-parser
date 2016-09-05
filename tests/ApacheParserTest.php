@@ -28,43 +28,49 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
         $data = [];
 
         $data['no multi line'] = [
-            [
+            ['main' => [
                 'ServerRoot "/usr"',
                 'Listen 80',
                 'ServerName localhost',
                 'DocumentRoot "/var/www/php"',
-            ],
+            ]],
             __DIR__.'/data/apache/no-multi-line.conf',
         ];
 
         $data['one multi line'] = [
-            [
+            ['main' => [
                 'ServerRoot "/usr"',
                 [
-                    '<Directory />',
-                    'AllowOverride none',
-                    'Require all denied',
-                    '</Directory>',
+                    'Directory' => [
+                        '<Directory />',
+                        'AllowOverride none',
+                        'Require all denied',
+                        '</Directory>',
+                    ],
                 ],
-            ],
+            ]],
             __DIR__.'/data/apache/one-multi-line.conf',
         ];
 
         $data['nested multi lines'] = [
-            [
+            ['main' => [
                 'ServerRoot "/usr"',
                 [
-                    '<IfModule log_config_module>',
-                    'LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined',
-                    [
-                        '<IfModule logio_module>',
-                        'LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio',
+                    'IfModule' => [
+                        '<IfModule log_config_module>',
+                        'LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined',
+                        [
+                            'IfModule' => [
+                                '<IfModule logio_module>',
+                                'LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio',
+                                '</IfModule>',
+                            ],
+                        ],
+                        'CustomLog "/var/log/apache2/access_log" common',
                         '</IfModule>',
                     ],
-                    'CustomLog "/var/log/apache2/access_log" common',
-                    '</IfModule>',
                 ],
-            ],
+            ]],
             __DIR__.'/data/apache/nested-multi-lines.conf',
         ];
 
@@ -76,7 +82,8 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
      */
     public function testApacheParser($expected, $configFile)
     {
-        $this->assertEquals($expected, $this->parser->setConfigFile($configFile)->getActiveConfig());
+        $actual = $this->parser->setConfigFile($configFile)->getActiveConfig();
+        $this->assertEquals($expected, $actual);
     }
 
     /**

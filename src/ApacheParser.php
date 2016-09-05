@@ -13,6 +13,7 @@
 namespace WebHelper\Parser;
 
 use WebHelper\Parser\Parser as BaseParser;
+use WebHelper\Parser\Compiler;
 
 /**
  * Apache specific parser.
@@ -22,6 +23,7 @@ use WebHelper\Parser\Parser as BaseParser;
 class ApacheParser extends BaseParser implements ParserInterface
 {
     const START_MULTI_LINE = '/^<(?<key>\w+)(?<value>[^>]*)>$/';
+    const END_MULTI_LINE = '/^<\/%s/';
 
     /**
      * Getter for the active config array.
@@ -30,69 +32,7 @@ class ApacheParser extends BaseParser implements ParserInterface
      */
     public function getActiveConfig()
     {
-        return $this->compile($this->activeConfig);
-    }
-
-    /**
-     * Does a nested array of lines depending on container Directives.
-     *
-     * @param array $activeConfig a clean config array of lines
-     *
-     * @return array a nested array of lines
-     */
-    private function compile($activeConfig)
-    {
-        $tempConfig = [];
-
-        while (!empty($activeConfig)) {
-            $lineConfig = array_shift($activeConfig);
-            $tempConfig[] = $this->subCompile($activeConfig, $lineConfig);
-        }
-
-        return $tempConfig;
-    }
-
-    /**
-     * Looks for a container directive.
-     *
-     * @param array  $activeConfig a clean config array of lines
-     * @param string $lineConfig   a line
-     *
-     * @return mixed a line or an array of line
-     */
-    private function subCompile(&$activeConfig, $lineConfig)
-    {
-        if (preg_match(self::START_MULTI_LINE, $lineConfig, $container)) {
-            return $this->findEndingKey($container['key'], $activeConfig, $lineConfig);
-        }
-
-        return $lineConfig;
-    }
-
-    /**
-     * Finds the end of a container directive.
-     *
-     * @param string $key          a container's name
-     * @param array  $activeConfig a clean config array of lines
-     * @param string $lineConfig   the starting config line of the container
-     *
-     * @return array a container of directives
-     *
-     * @throws ParserException if a container does not end correctly
-     */
-    private function findEndingKey($key, &$activeConfig, $lineConfig)
-    {
-        $lines = [$lineConfig];
-
-        while (!empty($activeConfig)) {
-            $lineConfig = array_shift($activeConfig);
-            $lines[] = $this->subCompile($activeConfig, $lineConfig);
-
-            if (preg_match('/^<\/'.$key.'/', $lineConfig)) {
-                return $lines;
-            }
-        }
-
-        throw ParserException::forEndingKeyNotFound($key);
+        $this->compiler = new Compiler(self::START_MULTI_LINE, self::END_MULTI_LINE);
+        return $this->compiler->doCompile($this->activeConfig);
     }
 }
