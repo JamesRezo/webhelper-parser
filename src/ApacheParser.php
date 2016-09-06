@@ -22,8 +22,9 @@ use WebHelper\Parser\Compiler;
  */
 class ApacheParser extends BaseParser implements ParserInterface
 {
+    const SIMPLE_DIRECTIVE = '/^(?<key>\w+)(?<value>.+)$/';
     const START_MULTI_LINE = '/^<(?<key>\w+)(?<value>[^>]*)>$/';
-    const END_MULTI_LINE = '/^<\/%s/';
+    const END_MULTI_LINE = '/^<\/%s>/';
 
     /**
      * Getter for the active config array.

@@ -22,12 +22,34 @@ class ParserTest extends PHPUnit_Framework_TestCase
         $this->parser = new TestParser();
     }
 
+    /**
+     * @expectedException WebHelper\Parser\ParserException
+     */
+    public function testCantReadConfigFileException()
+    {
+        $this->parser->setConfigFile(__DIR__.'/tmp/http.conf');
+    }
+
+    public function dataReadConfigFileException()
+    {
+        return [
+            'empty1' => [2, __DIR__.'/data/empty1.conf'],
+            'empty2' => [2, __DIR__.'/data/empty2.conf'],
+        ];
+    }
+
+    /**
+     * @dataProvider dataReadConfigFileException
+     * @expectedException WebHelper\Parser\InvalidConfigException
+     */
+    public function testReadConfigFileException($expected, $configFile)
+    {
+        $this->parser->setConfigFile($configFile);
+    }
+
     public function dataReadConfigFile()
     {
         return [
-            'no file' => [1, __DIR__.'/tmp/http.conf'],
-            'empty1' => [2, __DIR__.'/data/empty1.conf'],
-            'empty2' => [2, __DIR__.'/data/empty2.conf'],
             'file exists 1' => [0, __DIR__.'/data/dummy.conf'],
             'file exists 2' => [0, __DIR__.'/data/dos.conf'],
         ];

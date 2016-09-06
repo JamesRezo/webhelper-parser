@@ -12,18 +12,18 @@
 
 namespace WebHelper\Parser;
 
-use DomainException;
+use InvalidArgumentException;
 
 /**
  * @author James <james@rezo.net>
  */
-class ParserException extends DomainException
+class ParserException extends InvalidArgumentException
 {
-    public static function forEndingKeyNotFound($key)
+    public static function forFileUnreadable($file)
     {
         return new self(sprintf(
-            'No ending directive for %s',
-            $key
-        ));
+            'File "%s" is not readable',
+            $file
+        ), 1);
     }
 }

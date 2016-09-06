@@ -49,12 +49,14 @@ abstract class Parser implements ParserInterface
             $this->lastError = 1;
             $this->activeConfig = [];
 
-            return $this;
+            throw ParserException::forFileUnreadable($configFile);
         }
 
         $this->configFile = $configFile;
         if (!$this->parseConfigFile()) {
             $this->lastError = 2;
+
+            throw InvalidConfigException::forEmptyConfig($configFile);
         }
 
         return $this;

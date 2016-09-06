@@ -73,7 +73,7 @@ class Compiler
      *
      * @return array a container of directives
      *
-     * @throws ParserException if a container does not end correctly
+     * @throws InvalidConfigException if a container does not end correctly
      */
     private function findEndingKey($context, &$activeConfig, $lineConfig)
     {
@@ -89,6 +89,6 @@ class Compiler
             }
         }
 
-        throw ParserException::forEndingKeyNotFound($context);
+        throw InvalidConfigException::forEndingKeyNotFound($context);
     }
 }

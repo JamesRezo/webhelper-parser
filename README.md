@@ -14,13 +14,21 @@ use WebHelper\Parser\ApacheParser;
 
 $apache = new ApacheParser();
 
-$apache->setConfigFile($someConfigFile);
+try {
+    $activeConfig = $parser
+        ->setConfigFile('/private/etc/apache2/httpd.conf')
+        ->getActiveConfig();
 
-if (!$apache->getLastError()) {
-    $activeConfig = $apache->getActiveConfig();
+    echo $parser->getOriginalConfig();
+
+    echo var_export($activeConfig, true).PHP_EOL;
+} catch (ParserException $e) {
+    //file not found
+    var_dump($e->getMessage());
+} catch (InvalidConfigException $e) {
+    //empty config or syntax error
+    var_dump($e->getMessage());
 }
-
-var_dump($activeConfig);
 ```
 
 ## Advanced Usage
