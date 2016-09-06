@@ -1,5 +1,5 @@
 # Web Server Configuration File Generic Parser
-Part of WebHelper, a Generic Httpd Configuration Helper.
+Part of [WebHelper](http://github.com/JamesRezo/WebHelper), a Generic Httpd Configuration Helper.
 
 [![Build Status](https://travis-ci.org/JamesRezo/webhelper-parser.svg?branch=master)](https://travis-ci.org/JamesRezo/webhelper-parser)
 
@@ -11,6 +11,8 @@ Part of WebHelper, a Generic Httpd Configuration Helper.
 
 ```php
 use WebHelper\Parser\ApacheParser;
+use WebHelper\Parser\ParserException;
+use WebHelper\Parser\InvalidConfigException;
 
 $apache = new ApacheParser();
 
@@ -39,6 +41,21 @@ use WebHelper\Parser\Parser;
 
 class MyParser extends Parser
 {
+    //optionally
+    protected function beforeExplode($config)
+    {
+        // ... code ...
+        return $config;
+    }
+
+    //optionally
+    protected function afterExplode($config)
+    {
+        // ... code ...
+        return $config;
+    }
+
+    //mandatory
     public function getActiveConfig()
     {
         // ... code ...
