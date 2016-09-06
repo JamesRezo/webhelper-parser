@@ -15,15 +15,20 @@ namespace WebHelper\Parser;
 use InvalidArgumentException;
 
 /**
+ * Unattended parameters.
+ *
  * @author James <james@rezo.net>
  */
 class ParserException extends InvalidArgumentException
 {
     public static function forFileUnreadable($file)
     {
-        return new self(sprintf(
-            'File "%s" is not readable',
-            $file
-        ), 1);
+        return new self(
+            sprintf(
+                'File "%s" is not readable',
+                $file
+            ),
+            1
+        );
     }
 }

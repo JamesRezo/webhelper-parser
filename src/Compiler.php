@@ -18,9 +18,26 @@ namespace WebHelper\Parser;
  */
 class Compiler
 {
+    /**
+     * The string to match as a starting multi-line directive.
+     *
+     * @var string
+     */
     private $startMultiLine;
+
+    /**
+     * The string to match as an ending multi-line directive.
+     *
+     * @var string
+     */
     private $endMultiLine;
 
+    /**
+     * Constructor.
+     *
+     * @param string $startMultiLine match as a starting multi-line directive
+     * @param string $endMultiLine   match as an ending multi-line directive
+     */
     public function __construct($startMultiLine, $endMultiLine)
     {
         $this->startMultiLine = $startMultiLine;
@@ -67,7 +84,7 @@ class Compiler
     /**
      * Finds the end of a container directive.
      *
-     * @param string $context          a container's name
+     * @param string $context      a container's name
      * @param array  $activeConfig a clean config array of lines
      * @param string $lineConfig   the starting config line of the container
      *

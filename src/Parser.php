@@ -42,6 +42,9 @@ abstract class Parser implements ParserInterface
      * Setter for the config file to parse.
      *
      * @param string $configFile configuration file
+     *
+     * @throws ParserException        if configuration file is not readable
+     * @throws InvalidConfigException if active configuration is empty
      */
     public function setConfigFile($configFile = '')
     {
@@ -90,7 +93,7 @@ abstract class Parser implements ParserInterface
     }
 
     /**
-     * Does some extra parsing before the active configs turns into an array.
+     * Does some extra parsing before the active config turns into an array.
      *
      * @param string $config a config file content
      *
@@ -104,7 +107,7 @@ abstract class Parser implements ParserInterface
     }
 
     /**
-     * Does some extra parsing after the active configs has turned into an array.
+     * Does some extra parsing after the active config has turned into an array.
      *
      * @param array $config a config file content
      *
@@ -137,9 +140,9 @@ abstract class Parser implements ParserInterface
     /**
      * Deletes commented lines and end line comments.
      *
-     * @param  string $activeConfig a file content
+     * @param string $activeConfig a file content
      *
-     * @return string               a file content without comments
+     * @return string a file content without comments
      */
     private function deleteComments($config = '')
     {

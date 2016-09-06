@@ -13,7 +13,6 @@
 namespace WebHelper\Parser;
 
 use WebHelper\Parser\Parser as BaseParser;
-use WebHelper\Parser\Compiler;
 
 /**
  * Nginx specific parser.
@@ -34,6 +33,7 @@ class NginxParser extends BaseParser implements ParserInterface
     public function getActiveConfig()
     {
         $this->compiler = new Compiler(self::START_MULTI_LINE, self::END_MULTI_LINE);
+
         return $this->compiler->doCompile($this->activeConfig);
     }
 

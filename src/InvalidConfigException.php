@@ -15,6 +15,8 @@ namespace WebHelper\Parser;
 use DomainException;
 
 /**
+ * Invalid configuration file content.
+ *
  * @author James <james@rezo.net>
  */
 class InvalidConfigException extends DomainException
