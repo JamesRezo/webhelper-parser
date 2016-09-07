@@ -2,6 +2,7 @@
 Part of [WebHelper](http://github.com/JamesRezo/WebHelper), a Generic Httpd Configuration Helper.
 
 [![Build Status](https://travis-ci.org/JamesRezo/webhelper-parser.svg?branch=master)](https://travis-ci.org/JamesRezo/webhelper-parser)
+[![Code Climate](https://codeclimate.com/github/JamesRezo/webhelper-parser/badges/gpa.svg)](https://codeclimate.com/github/JamesRezo/webhelper-parser)
 
 ## Installation
 
