@@ -33,15 +33,24 @@ class Compiler
     private $endMultiLine;
 
     /**
+     * The string to match a simple Directive.
+     *
+     * @var string
+     */
+    private $simpleDirective;
+
+    /**
      * Constructor.
      *
-     * @param string $startMultiLine match as a starting multi-line directive
-     * @param string $endMultiLine   match as an ending multi-line directive
+     * @param string $startMultiLine  match as a starting multi-line directive
+     * @param string $endMultiLine    match as an ending multi-line directive
+     * @param string $simpleDirective match a simple directive
      */
-    public function __construct($startMultiLine, $endMultiLine)
+    public function __construct($startMultiLine, $endMultiLine, $simpleDirective)
     {
         $this->startMultiLine = $startMultiLine;
         $this->endMultiLine = $endMultiLine;
+        $this->simpleDirective = $simpleDirective;
     }
 
     /**
@@ -75,7 +84,7 @@ class Compiler
     private function subCompile(&$activeConfig, $lineConfig)
     {
         if (preg_match($this->startMultiLine, $lineConfig, $container)) {
-            return $this->findEndingKey(trim($container['key']), $activeConfig, $lineConfig);
+            return $this->findEndingKey(trim($container['key']), trim($container['value']), $activeConfig, $lineConfig);
         }
 
         return $lineConfig;
@@ -85,6 +94,7 @@ class Compiler
      * Finds the end of a container directive.
      *
      * @param string $context      a container's name
+     * @param string $contextValue a container's value
      * @param array  $activeConfig a clean config array of lines
      * @param string $lineConfig   the starting config line of the container
      *
@@ -92,7 +102,7 @@ class Compiler
      *
      * @throws InvalidConfigException if a container does not end correctly
      */
-    private function findEndingKey($context, &$activeConfig, $lineConfig)
+    private function findEndingKey($context, $contextValue, &$activeConfig, $lineConfig)
     {
         $lines = [$lineConfig];
         $endMultiLine = sprintf($this->endMultiLine, $context);
@@ -102,7 +112,7 @@ class Compiler
             $lines[] = $this->subCompile($activeConfig, $lineConfig);
 
             if (preg_match($endMultiLine, $lineConfig)) {
-                return [$context => $lines];
+                return [$context => ['value' => $contextValue, 'block' => $lines]];
             }
         }
 

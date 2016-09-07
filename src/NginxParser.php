@@ -22,7 +22,7 @@ use WebHelper\Parser\Parser as BaseParser;
 class NginxParser extends BaseParser implements ParserInterface
 {
     const SIMPLE_DIRECTIVE = '/^(?<key>\w+)(?<value>[^;]+);$/';
-    const START_MULTI_LINE = '/^(?<key>[^\{]+)\{$/';
+    const START_MULTI_LINE = '/^(?<key>\w+)(?<value>[^\{]+)\{$/';
     const END_MULTI_LINE = '/^\}$/';
 
     /**
@@ -32,7 +32,7 @@ class NginxParser extends BaseParser implements ParserInterface
      */
     public function getActiveConfig()
     {
-        $this->compiler = new Compiler(self::START_MULTI_LINE, self::END_MULTI_LINE);
+        $this->compiler = new Compiler(self::START_MULTI_LINE, self::END_MULTI_LINE, self::SIMPLE_DIRECTIVE);
 
         return $this->compiler->doCompile($this->activeConfig);
     }

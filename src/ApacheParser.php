@@ -32,7 +32,7 @@ class ApacheParser extends BaseParser implements ParserInterface
      */
     public function getActiveConfig()
     {
-        $this->compiler = new Compiler(self::START_MULTI_LINE, self::END_MULTI_LINE);
+        $this->compiler = new Compiler(self::START_MULTI_LINE, self::END_MULTI_LINE, self::SIMPLE_DIRECTIVE);
 
         return $this->compiler->doCompile($this->activeConfig);
     }

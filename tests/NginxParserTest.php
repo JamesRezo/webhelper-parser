@@ -30,20 +30,35 @@ class NginxParserTest extends PHPUnit_Framework_TestCase
         $data['test'] = [
             [
                 'main' => [
-                    ['events' => ['events {', '}']],
+                    ['events' => [
+                        'value' => '',
+                        'block' => [
+                            'events {',
+                            '}'
+                        ],
+                    ]],
                     ['http' => [
-                        'http {',
-                        ['server' => [
-                            'server {',
-                            ['location /' => [
-                                'location / {',
-                                'root html;',
-                                '}',
+                        'value' => '',
+                        'block' => [
+                            'http {',
+                            ['server' => [
+                                'value' => '',
+                                'block' => [
+                                    'server {',
+                                    ['location' => [
+                                        'value' => '/',
+                                        'block' => [
+                                            'location / {',
+                                            'root html;',
+                                            '}',
+                                        ],
+                                    ]],
+                                    '}',
+                                ],
                             ]],
                             '}',
                         ]],
-                        '}',
-                    ]],
+                    ],
                 ],
             ],
             __DIR__.'/data/nginx/test.conf',
