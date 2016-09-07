@@ -66,9 +66,9 @@ abstract class Parser implements ParserInterface
     }
 
     /**
-     * Getter for the active config array.
+     * Getter for the active config main context.
      *
-     * @return array active config
+     * @return Directive\DirectiveInterface the active config
      */
     abstract public function getActiveConfig();
 

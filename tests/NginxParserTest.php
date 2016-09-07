@@ -13,6 +13,8 @@ namespace WebHelper\Test\Parser;
 
 use PHPUnit_Framework_TestCase;
 use WebHelper\Parser\NginxParser;
+use WebHelper\Parser\Directive\SimpleDirective;
+use WebHelper\Parser\Directive\BlockDirective;
 
 class NginxParserTest extends PHPUnit_Framework_TestCase
 {
@@ -27,29 +29,17 @@ class NginxParserTest extends PHPUnit_Framework_TestCase
     {
         $data = [];
 
+        $events = new BlockDirective('events');
+        $http = new BlockDirective('http');
+        $server = new BlockDirective('server');
+        $location = new BlockDirective('location', '/');
+        $root = new SimpleDirective('root', 'html');
+        $http->add($server->add($location->add($root)));
         $data['test'] = [
             [
                 'main' => [
-                    ['events' => [
-                        'value' => '',
-                        'block' => [],
-                    ]],
-                    ['http' => [
-                        'value' => '',
-                        'block' => [
-                            ['server' => [
-                                'value' => '',
-                                'block' => [
-                                    ['location' => [
-                                        'value' => '/',
-                                        'block' => [
-                                            'root html;',
-                                        ],
-                                    ]],
-                                ],
-                            ]],
-                        ],
-                    ]],
+                    $events,
+                    $http,
                 ],
             ],
             __DIR__.'/data/nginx/test.conf',

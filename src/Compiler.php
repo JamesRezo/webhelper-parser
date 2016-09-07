@@ -11,6 +11,9 @@
 
 namespace WebHelper\Parser;
 
+use WebHelper\Parser\Directive\SimpleDirective;
+use WebHelper\Parser\Directive\BlockDirective;
+
 /**
  * Web server configuration generic compiler.
  *
@@ -59,7 +62,7 @@ class Compiler
      * @param array  $activeConfig a clean config array of lines
      * @param string $context      the context name
      *
-     * @return array a nested array of lines
+     * @return array a nested array of directives
      */
     public function doCompile($activeConfig, $context = 'main')
     {
@@ -76,10 +79,12 @@ class Compiler
     /**
      * Looks for a container directive.
      *
-     * @param array  $activeConfig a clean config array of lines
+     * @param array  $activeConfig a clean config array of directives
      * @param string $lineConfig   a line
      *
-     * @return mixed a line or an array of line
+     * @return Directive\DirectiveInterface a directive or a container of directives
+     *
+     * @throws InvalidConfigException if a simple directive is incorrect
      */
     private function subCompile(&$activeConfig, $lineConfig)
     {
@@ -87,11 +92,11 @@ class Compiler
             return $this->findEndingKey(trim($container['key']), trim($container['value']), $activeConfig);
         }
 
-        if (!preg_match($this->simpleDirective, $lineConfig)) {
+        if (!preg_match($this->simpleDirective, $lineConfig, $container)) {
             throw InvalidConfigException::forSimpleDirectiveSyntaxError($lineConfig);
         }
 
-        return $lineConfig;
+        return new SimpleDirective(trim($container['key']), trim($container['value']));
     }
 
     /**
@@ -101,7 +106,7 @@ class Compiler
      * @param string $contextValue a container's value
      * @param array  $activeConfig a clean config array of lines
      *
-     * @return array a container of directives
+     * @return Directive\BlockDirective a container of directives
      *
      * @throws InvalidConfigException if a container does not end correctly
      */
@@ -114,12 +119,31 @@ class Compiler
             $lineConfig = array_shift($activeConfig);
 
             if (preg_match($endMultiLine, $lineConfig)) {
-                return [$context => ['value' => $contextValue, 'block' => $lines]];
+                return $this->buildBlockDirective($context, $contextValue, $lines);
             }
 
             $lines[] = $this->subCompile($activeConfig, $lineConfig);
         }
 
         throw InvalidConfigException::forEndingKeyNotFound($context);
+    }
+
+    /**
+     * Builds a BlockDirective.
+     *
+     * @param string $context      a container's name
+     * @param string $contextValue a container's value
+     * @param array  $lines        an array of directives
+     *
+     * @return Directive\BlockDirective the BlockDirective
+     */
+    private function buildBlockDirective($context, $contextValue, $lines)
+    {
+        $block = new BlockDirective($context, $contextValue);
+        foreach ($lines as $directive) {
+            $block->add($directive);
+        }
+
+        return $block;
     }
 }

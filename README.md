@@ -10,12 +10,13 @@ Part of [WebHelper](http://github.com/JamesRezo/WebHelper), a Generic Httpd Conf
 
 ## Basic Usage
 
+Parse an Apache configuration file:
 ```php
 use WebHelper\Parser\ApacheParser;
 use WebHelper\Parser\ParserException;
 use WebHelper\Parser\InvalidConfigException;
 
-$apache = new ApacheParser();
+$parser = new ApacheParser();
 
 try {
     $activeConfig = $parser
@@ -32,6 +33,21 @@ try {
     //empty config or syntax error
     var_dump($e->getMessage());
 }
+```
+
+Or the same with Nginx
+```php
+use WebHelper\Parser\NginxParser;
+use WebHelper\Parser\ParserException;
+use WebHelper\Parser\InvalidConfigException;
+
+$parser = new NginxParser();
+
+$activeConfig = $parser
+        ->setConfigFile('/etc/nginx/nginx.conf')
+        ->getActiveConfig();
+
+// etc...
 ```
 
 ## Advanced Usage
@@ -64,6 +80,27 @@ class MyParser extends Parser
         // ... code ...
 
         return $this->activeConfig;
+    }
+}
+```
+
+Use the compiler to parse specific configuration items :
+```php
+use WebHelper\Parser\Parser;
+
+class MyParser extends Parser
+{
+    public function getActiveConfig()
+    {
+        $compiler = new Compiler(
+            //a Regexp that matches the begining of a multiline syntax
+            $mutilineStarter,
+            //a Regexp that matches the end of a multiline syntax
+            $multilineEnder,
+            //a Regexp that matches a simple line syntax
+            $simplelineChecker
+        );
+        return $compiler->doCompile($this->activeConfig);
     }
 }
 ```

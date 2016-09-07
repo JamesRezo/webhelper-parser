@@ -26,9 +26,9 @@ class ApacheParser extends BaseParser implements ParserInterface
     const END_MULTI_LINE = '/^<\/%s>/';
 
     /**
-     * Getter for the active config array.
+     * Getter for the active config main context.
      *
-     * @return array active config
+     * @return Directive\DirectiveInterface the active config
      */
     public function getActiveConfig()
     {

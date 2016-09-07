@@ -26,9 +26,9 @@ interface ParserInterface
     public function setConfigFile($configFile = '');
 
     /**
-     * Getter for the active config array.
+     * Getter for the active config main context.
      *
-     * @return array active config
+     * @return Directive\DirectiveInterface the active config
      */
     public function getActiveConfig();
 

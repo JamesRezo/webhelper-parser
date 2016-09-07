@@ -13,6 +13,8 @@ namespace WebHelper\Test\Parser;
 
 use PHPUnit_Framework_TestCase;
 use WebHelper\Parser\ApacheParser;
+use WebHelper\Parser\Directive\SimpleDirective;
+use WebHelper\Parser\Directive\BlockDirective;
 
 class ApacheParserTest extends PHPUnit_Framework_TestCase
 {
@@ -29,50 +31,45 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
 
         $data['no multi line'] = [
             ['main' => [
-                'ServerRoot "/usr"',
-                'Listen 80',
-                'ServerName localhost',
-                'DocumentRoot "/var/www/php"',
+                new SimpleDirective('ServerRoot', '"/usr"'),
+                new SimpleDirective('Listen', '80'),
+                new SimpleDirective('ServerName', 'localhost'),
+                new SimpleDirective('DocumentRoot', '"/var/www/php"'),
             ]],
             __DIR__.'/data/apache/no-multi-line.conf',
         ];
 
+        $block = new BlockDirective('Directory', '/');
+        $block
+            ->add(new SimpleDirective('AllowOverride', 'none'))
+            ->add(new SimpleDirective('Require', 'all denied'));
         $data['one multi line'] = [
             ['main' => [
-                'ServerRoot "/usr"',
-                [
-                    'Directory' => [
-                        'value' => '/',
-                        'block' => [
-                            'AllowOverride none',
-                            'Require all denied',
-                        ],
-                    ],
-                ],
+                new SimpleDirective('ServerRoot', '"/usr"'),
+                $block,
             ]],
             __DIR__.'/data/apache/one-multi-line.conf',
         ];
 
+        $block = new BlockDirective('IfModule', 'log_config_module');
+        $nestedBlock = new BlockDirective('IfModule', 'logio_module');
+        $nestedBlock
+            ->add(new SimpleDirective(
+                'LogFormat',
+                '"%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio'
+            ));
+        $block
+            ->add(new SimpleDirective(
+                'LogFormat',
+                '"%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined'
+            ))
+            ->add($nestedBlock)
+            ->add(new SimpleDirective('CustomLog', '"/var/log/apache2/access_log" common'));
+
         $data['nested multi lines'] = [
             ['main' => [
-                'ServerRoot "/usr"',
-                [
-                    'IfModule' => [
-                        'value' => 'log_config_module',
-                        'block' => [
-                            'LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined',
-                            [
-                                'IfModule' => [
-                                    'value' => 'logio_module',
-                                    'block' => [
-                                        'LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio',
-                                    ],
-                                ],
-                            ],
-                            'CustomLog "/var/log/apache2/access_log" common',
-                        ],
-                    ],
-                ],
+                new SimpleDirective('ServerRoot', '"/usr"'),
+                $block,
             ]],
             __DIR__.'/data/apache/nested-multi-lines.conf',
         ];
