@@ -96,7 +96,6 @@ class Compiler
      * @param string $context      a container's name
      * @param string $contextValue a container's value
      * @param array  $activeConfig a clean config array of lines
-     * @param string $lineConfig   the starting config line of the container
      *
      * @return array a container of directives
      *
