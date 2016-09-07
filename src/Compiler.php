@@ -84,7 +84,7 @@ class Compiler
     private function subCompile(&$activeConfig, $lineConfig)
     {
         if (preg_match($this->startMultiLine, $lineConfig, $container)) {
-            return $this->findEndingKey(trim($container['key']), trim($container['value']), $activeConfig, $lineConfig);
+            return $this->findEndingKey(trim($container['key']), trim($container['value']), $activeConfig);
         }
 
         return $lineConfig;
@@ -102,18 +102,19 @@ class Compiler
      *
      * @throws InvalidConfigException if a container does not end correctly
      */
-    private function findEndingKey($context, $contextValue, &$activeConfig, $lineConfig)
+    private function findEndingKey($context, $contextValue, &$activeConfig)
     {
-        $lines = [$lineConfig];
+        $lines = [];
         $endMultiLine = sprintf($this->endMultiLine, $context);
 
         while (!empty($activeConfig)) {
             $lineConfig = array_shift($activeConfig);
-            $lines[] = $this->subCompile($activeConfig, $lineConfig);
 
             if (preg_match($endMultiLine, $lineConfig)) {
                 return [$context => ['value' => $contextValue, 'block' => $lines]];
             }
+
+            $lines[] = $this->subCompile($activeConfig, $lineConfig);
         }
 
         throw InvalidConfigException::forEndingKeyNotFound($context);

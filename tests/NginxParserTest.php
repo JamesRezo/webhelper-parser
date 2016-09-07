@@ -32,31 +32,22 @@ class NginxParserTest extends PHPUnit_Framework_TestCase
                 'main' => [
                     ['events' => [
                         'value' => '',
-                        'block' => [
-                            'events {',
-                            '}'
-                        ],
+                        'block' => [],
                     ]],
                     ['http' => [
                         'value' => '',
                         'block' => [
-                            'http {',
                             ['server' => [
                                 'value' => '',
                                 'block' => [
-                                    'server {',
                                     ['location' => [
                                         'value' => '/',
                                         'block' => [
-                                            'location / {',
                                             'root html;',
-                                            '}',
                                         ],
                                     ]],
-                                    '}',
                                 ],
                             ]],
-                            '}',
                         ]],
                     ],
                 ],

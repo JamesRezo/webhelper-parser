@@ -44,10 +44,8 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
                     'Directory' => [
                         'value' => '/',
                         'block' => [
-                            '<Directory />',
                             'AllowOverride none',
                             'Require all denied',
-                            '</Directory>',
                         ],
                     ],
                 ],
@@ -62,20 +60,16 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
                     'IfModule' => [
                         'value' => 'log_config_module',
                         'block' => [
-                            '<IfModule log_config_module>',
                             'LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined',
                             [
                                 'IfModule' => [
                                     'value' => 'logio_module',
                                     'block' => [
-                                        '<IfModule logio_module>',
                                         'LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio',
-                                        '</IfModule>',
                                     ],
                                 ],
                             ],
                             'CustomLog "/var/log/apache2/access_log" common',
-                            '</IfModule>',
                         ],
                     ],
                 ],
