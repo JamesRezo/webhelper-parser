@@ -36,4 +36,12 @@ class InvalidConfigException extends DomainException
             $key
         ), 3);
     }
+
+    public static function forSimpleDirectiveSyntaxError($line)
+    {
+        return new self(sprintf(
+            'Syntax error for the line "%s"',
+            $line
+        ), 4);
+    }
 }

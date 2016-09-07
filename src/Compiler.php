@@ -87,6 +87,10 @@ class Compiler
             return $this->findEndingKey(trim($container['key']), trim($container['value']), $activeConfig);
         }
 
+        if (!preg_match($this->simpleDirective, $lineConfig)) {
+            throw InvalidConfigException::forSimpleDirectiveSyntaxError($lineConfig);
+        }
+
         return $lineConfig;
     }
 
