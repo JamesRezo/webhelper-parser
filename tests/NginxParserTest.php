@@ -29,19 +29,15 @@ class NginxParserTest extends PHPUnit_Framework_TestCase
     {
         $data = [];
 
+        $main = new BlockDirective('main');
         $events = new BlockDirective('events');
         $http = new BlockDirective('http');
         $server = new BlockDirective('server');
         $location = new BlockDirective('location', '/');
         $root = new SimpleDirective('root', 'html');
-        $http->add($server->add($location->add($root)));
+        $main->add($events)->add($http->add($server->add($location->add($root))));
         $data['test'] = [
-            [
-                'main' => [
-                    $events,
-                    $http,
-                ],
-            ],
+            $main,
             __DIR__.'/data/nginx/test.conf',
         ];
 

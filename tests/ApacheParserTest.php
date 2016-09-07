@@ -29,13 +29,15 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
     {
         $data = [];
 
+        $main = new BlockDirective('main');
+        $main
+            ->add(new SimpleDirective('ServerRoot', '"/usr"'))
+            ->add(new SimpleDirective('Listen', '80'))
+            ->add(new SimpleDirective('ServerName', 'localhost'))
+            ->add(new SimpleDirective('DocumentRoot', '"/var/www/php"'))
+        ;
         $data['no multi line'] = [
-            ['main' => [
-                new SimpleDirective('ServerRoot', '"/usr"'),
-                new SimpleDirective('Listen', '80'),
-                new SimpleDirective('ServerName', 'localhost'),
-                new SimpleDirective('DocumentRoot', '"/var/www/php"'),
-            ]],
+            $main,
             __DIR__.'/data/apache/no-multi-line.conf',
         ];
 
@@ -43,11 +45,13 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
         $block
             ->add(new SimpleDirective('AllowOverride', 'none'))
             ->add(new SimpleDirective('Require', 'all denied'));
+        $main = new BlockDirective('main');
+        $main
+            ->add(new SimpleDirective('ServerRoot', '"/usr"'))
+            ->add($block)
+        ;
         $data['one multi line'] = [
-            ['main' => [
-                new SimpleDirective('ServerRoot', '"/usr"'),
-                $block,
-            ]],
+            $main,
             __DIR__.'/data/apache/one-multi-line.conf',
         ];
 
@@ -65,12 +69,13 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
             ))
             ->add($nestedBlock)
             ->add(new SimpleDirective('CustomLog', '"/var/log/apache2/access_log" common'));
-
+        $main = new BlockDirective('main');
+        $main
+            ->add(new SimpleDirective('ServerRoot', '"/usr"'))
+            ->add($block)
+        ;
         $data['nested multi lines'] = [
-            ['main' => [
-                new SimpleDirective('ServerRoot', '"/usr"'),
-                $block,
-            ]],
+            $main,
             __DIR__.'/data/apache/nested-multi-lines.conf',
         ];
 
