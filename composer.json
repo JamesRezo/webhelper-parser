@@ -9,7 +9,9 @@
             "email": "james@rezo.net"
         }
     ],
-    "require": {},
+    "require": {
+        "php": "^5.5 || ^7.0"
+    },
     "autoload": {
         "psr-4": {
             "WebHelper\\Parser\\": "src/"
@@ -21,6 +23,6 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.5"
+        "phpunit/phpunit": "^4.8 || ^5.5"
     }
 }
