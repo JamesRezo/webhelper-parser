@@ -35,9 +35,6 @@ abstract class Parser implements ParserInterface
      */
     private $lastError = 0;
 
-    /** @var WebHelper\Parser\Compiler a Compiler instance */
-    private $compiler;
-
     /**
      * Setter for the config file to parse.
      *

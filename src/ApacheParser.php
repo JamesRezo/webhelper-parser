@@ -25,6 +25,14 @@ class ApacheParser extends BaseParser implements ParserInterface
     const START_MULTI_LINE = '/^<(?<key>\w+)(?<value>[^>]*)>$/';
     const END_MULTI_LINE = '/^<\/%s>/';
 
+    /** @var WebHelper\Parser\Compiler a Compiler instance */
+    private $compiler;
+
+    public function __construct()
+    {
+        $this->compiler = new Compiler(self::START_MULTI_LINE, self::END_MULTI_LINE, self::SIMPLE_DIRECTIVE);
+    }
+
     /**
      * Getter for the active config main context.
      *

@@ -61,4 +61,13 @@ abstract class Directive implements DirectiveInterface
     {
         return $this;
     }
+
+    /**
+     * Confirms if the directive contains a specified directive.
+     *
+     * @param string $name the directive for which to check existence
+     *
+     * @return bool true if the sub-directive exists, false otherwise
+     */
+    abstract public function hasDirective($name);
 }

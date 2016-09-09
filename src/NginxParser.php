@@ -25,6 +25,17 @@ class NginxParser extends BaseParser implements ParserInterface
     const START_MULTI_LINE = '/^(?<key>\w+)(?<value>[^\{]+)\{$/';
     const END_MULTI_LINE = '/^\}$/';
 
+    /** @var WebHelper\Parser\Compiler a Compiler instance */
+    private $compiler;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->compiler = new Compiler(self::START_MULTI_LINE, self::END_MULTI_LINE, self::SIMPLE_DIRECTIVE);
+    }
+
     /**
      * Getter for the active config main context.
      *
@@ -32,8 +43,6 @@ class NginxParser extends BaseParser implements ParserInterface
      */
     public function getActiveConfig()
     {
-        $this->compiler = new Compiler(self::START_MULTI_LINE, self::END_MULTI_LINE, self::SIMPLE_DIRECTIVE);
-
         return $this->compiler->doCompile($this->activeConfig);
     }
 

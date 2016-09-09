@@ -20,4 +20,15 @@ namespace WebHelper\Parser\Directive;
  */
 class SimpleDirective extends Directive implements DirectiveInterface
 {
+    /**
+     * Confirms if the directive contains a specified directive.
+     *
+     * @param string $name the directive for which to check existence
+     *
+     * @return bool true if the sub-directive exists, false otherwise
+     */
+    public function hasDirective($name)
+    {
+        return false;
+    }
 }
