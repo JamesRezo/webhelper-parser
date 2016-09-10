@@ -25,7 +25,7 @@ class ApacheParser extends BaseParser implements ParserInterface
     const START_MULTI_LINE = '/^<(?<key>\w+)(?<value>[^>]*)>$/';
     const END_MULTI_LINE = '/^<\/%s>/';
 
-    /** @var WebHelper\Parser\Compiler a Compiler instance */
+    /** @var Compiler a Compiler instance */
     private $compiler;
 
     public function __construct()
@@ -46,11 +46,11 @@ class ApacheParser extends BaseParser implements ParserInterface
     /**
      * Does some extra parsing after the active config has turned into an array.
      *
-     * @param array $activeConfig a config file content
+     * @param array $activeConfig an active config
      *
-     * @return array a config file content
+     * @return array an active config
      */
-    protected function afterExplode($activeConfig)
+    protected function afterExplode(array $activeConfig)
     {
         $activeConfig = parent::afterExplode($activeConfig);
         $cleanedActiveConfig = [];

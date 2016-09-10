@@ -25,7 +25,7 @@ class NginxParser extends BaseParser implements ParserInterface
     const START_MULTI_LINE = '/^(?<key>\w+)(?<value>[^\{]+)\{$/';
     const END_MULTI_LINE = '/^\}$/';
 
-    /** @var WebHelper\Parser\Compiler a Compiler instance */
+    /** @var Compiler a Compiler instance */
     private $compiler;
 
     /**

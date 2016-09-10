@@ -106,11 +106,11 @@ abstract class Parser implements ParserInterface
     /**
      * Does some extra parsing after the active config has turned into an array.
      *
-     * @param array $activeConfig a config file content
+     * @param array $activeConfig an active config
      *
-     * @return array a config file content
+     * @return array an active config
      */
-    protected function afterExplode($activeConfig)
+    protected function afterExplode(array $activeConfig)
     {
         $activeConfig = $this->deleteBlankLines($activeConfig);
 
