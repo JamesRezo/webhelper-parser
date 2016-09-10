@@ -21,6 +21,13 @@ use InvalidArgumentException;
  */
 class ParserException extends InvalidArgumentException
 {
+    /**
+     * the exception to throw if the configuration file is unreadable.
+     *
+     * @param string $file file pathname
+     *
+     * @return ParserException the exception to throw
+     */
     public static function forFileUnreadable($file)
     {
         return new self(

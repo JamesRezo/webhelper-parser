@@ -21,6 +21,13 @@ use DomainException;
  */
 class InvalidConfigException extends DomainException
 {
+    /**
+     * the exception to throw if the configuration file results as an empty active config.
+     *
+     * @param string $file file pathname
+     *
+     * @return InvalidConfigException the exception to throw
+     */
     public static function forEmptyConfig($file)
     {
         return new self(sprintf(
@@ -29,6 +36,13 @@ class InvalidConfigException extends DomainException
         ), 2);
     }
 
+    /**
+     * the exception to throw if a directive has no ending key.
+     *
+     * @param string $key a directive name
+     *
+     * @return InvalidConfigException the exception to throw
+     */
     public static function forEndingKeyNotFound($key)
     {
         return new self(sprintf(
@@ -37,6 +51,13 @@ class InvalidConfigException extends DomainException
         ), 3);
     }
 
+    /**
+     * the exception to throw if a simple directive does not match against the accepted syntax.
+     *
+     * @param string $line the line of the simple directive
+     *
+     * @return InvalidConfigException the exception to throw
+     */
     public static function forSimpleDirectiveSyntaxError($line)
     {
         return new self(sprintf(

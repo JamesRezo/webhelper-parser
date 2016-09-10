@@ -138,7 +138,7 @@ abstract class Parser implements ParserInterface
     /**
      * Deletes commented lines and end line comments.
      *
-     * @param string $activeConfig a file content
+     * @param string $config a file content
      *
      * @return string a file content without comments
      */

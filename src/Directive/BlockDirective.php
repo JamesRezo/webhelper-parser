@@ -12,7 +12,7 @@
 namespace WebHelper\Parser\Directive;
 
 /**
- * Describes a directive instance.
+ * Describes a block directive instance or a context.
  *
  * a BlockDirective is an ordered list of other directives set in a context.
  *
@@ -20,6 +20,7 @@ namespace WebHelper\Parser\Directive;
  */
 class BlockDirective extends Directive implements DirectiveInterface
 {
+    /** @var array orderd list of sub directives */
     private $directives = [];
 
     /**
@@ -45,7 +46,7 @@ class BlockDirective extends Directive implements DirectiveInterface
     {
         $inSubDirective = false;
 
-        foreach ($this->directives as $index => $directive) {
+        foreach ($this->directives as $directive) {
             if ($directive->getName() == $name) {
                 return true;
             }
@@ -58,6 +59,13 @@ class BlockDirective extends Directive implements DirectiveInterface
         return $inSubDirective;
     }
 
+    /**
+     * Confirms if the directive is simple.
+     *
+     * Block directive can have sub directives
+     *
+     * @return bool true if the directive is simple, false otherwise
+     */
     public function isSimple()
     {
         return false;

@@ -32,6 +32,13 @@ class SimpleDirective extends Directive implements DirectiveInterface
         return false;
     }
 
+    /**
+     * Confirms if the directive is simple.
+     *
+     * Simple directive cannot have sub directive
+     *
+     * @return bool true if the directive is simple, false otherwise
+     */
     public function isSimple()
     {
         return true;

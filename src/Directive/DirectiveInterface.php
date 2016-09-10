@@ -52,5 +52,12 @@ interface DirectiveInterface
      */
     public function hasDirective($name);
 
+    /**
+     * Confirms if the directive is simple.
+     *
+     * Simple directive cannot have sub directive
+     *
+     * @return bool true if the directive is simple, false otherwise
+     */
     public function isSimple();
 }

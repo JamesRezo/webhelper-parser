@@ -22,10 +22,18 @@ namespace WebHelper\Parser\Directive;
  */
 abstract class Directive implements DirectiveInterface
 {
+    /** @var string the name of the key/context */
     private $name;
 
+    /** @var string the value of the key/context */
     private $value;
 
+    /**
+     * Base contructor.
+     *
+     * @param string $name  the name of the key/context to instanciate
+     * @param string $value the optional value of the key/context to instanciate
+     */
     public function __construct($name, $value = '')
     {
         $this->name = $name;
@@ -71,5 +79,12 @@ abstract class Directive implements DirectiveInterface
      */
     abstract public function hasDirective($name);
 
+    /**
+     * Confirms if the directive is simple.
+     *
+     * Simple directive cannot have sub directive
+     *
+     * @return bool true if the directive is simple, false otherwise
+     */
     abstract public function isSimple();
 }
