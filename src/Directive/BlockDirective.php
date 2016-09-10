@@ -51,9 +51,25 @@ class BlockDirective extends Directive implements DirectiveInterface
                 return true;
             }
 
-            if (!$directive->isSimple()) {
-                $inSubDirective = $inSubDirective || $directive->hasDirective($name);
-            }
+            $inSubDirective = $this->hasInnerDirective($name, $inSubDirective, $directive);
+        }
+
+        return $inSubDirective;
+    }
+
+    /**
+     * Looks into sub directives to confirm if the actual contains a specified directive.
+     *
+     * @param string             $name           the directive for which to check existence
+     * @param bool               $inSubDirective the actual state
+     * @param DirectiveInterface $directive      the sub directive to look into
+     *
+     * @return bool true if the sub-directive exists, false otherwise
+     */
+    private function hasInnerDirective($name, $inSubDirective, DirectiveInterface $directive)
+    {
+        if (!$directive->isSimple()) {
+            $inSubDirective = $inSubDirective || $directive->hasDirective($name);
         }
 
         return $inSubDirective;
