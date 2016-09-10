@@ -2,6 +2,8 @@
 Part of [WebHelper](http://github.com/JamesRezo/WebHelper), a Generic Httpd Configuration Helper.
 
 [![Build Status](https://travis-ci.org/JamesRezo/webhelper-parser.svg?branch=master)](https://travis-ci.org/JamesRezo/webhelper-parser)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/JamesRezo/webhelper-parser/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/JamesRezo/webhelper-parser/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/JamesRezo/webhelper-parser/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/JamesRezo/webhelper-parser/?branch=master)
 [![Code Climate](https://codeclimate.com/github/JamesRezo/webhelper-parser/badges/gpa.svg)](https://codeclimate.com/github/JamesRezo/webhelper-parser)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/2ef11e52-9098-4c72-a0c2-c83996e9bf62/mini.png)](https://insight.sensiolabs.com/projects/2ef11e52-9098-4c72-a0c2-c83996e9bf62)
 
