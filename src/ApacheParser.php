@@ -46,7 +46,7 @@ class ApacheParser extends BaseParser implements ParserInterface
     /**
      * Does some extra parsing after the active config has turned into an array.
      *
-     * @param array $config a config file content
+     * @param array $activeConfig a config file content
      *
      * @return array a config file content
      */
