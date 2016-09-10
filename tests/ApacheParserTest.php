@@ -98,4 +98,19 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
     {
         $this->parser->setConfigFile(__DIR__.'/data/apache/wrong-syntax.conf')->getActiveConfig();
     }
+
+    public function testContinuingLine()
+    {
+        $directory = new BlockDirective('Directory', '"/home/user/public_html"');
+        $directory->add(new SimpleDirective('Require', 'all granted'));
+        $expected = new BlockDirective('main');
+        $expected->add(new SimpleDirective(
+            'LogFormat',
+            '"%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined')
+        );
+        $expected->add($directory);
+        $actual = $this->parser->setConfigFile(__DIR__.'/data/apache/continuing-line.conf')->getActiveConfig();
+
+        $this->assertEquals($expected, $actual);
+    }
 }

@@ -40,8 +40,38 @@ class ApacheParser extends BaseParser implements ParserInterface
      */
     public function getActiveConfig()
     {
-        $this->compiler = new Compiler(self::START_MULTI_LINE, self::END_MULTI_LINE, self::SIMPLE_DIRECTIVE);
-
         return $this->compiler->doCompile($this->activeConfig);
+    }
+
+    /**
+     * Does some extra parsing after the active config has turned into an array.
+     *
+     * @param array $config a config file content
+     *
+     * @return array a config file content
+     */
+    protected function afterExplode($activeConfig)
+    {
+        $activeConfig = parent::afterExplode($activeConfig);
+        $cleanedActiveConfig = [];
+
+        //Continuing directives with "\" at the very end of a line are reassembled
+        $previousLine = '';
+        foreach ($activeConfig as $line) {
+            if ($previousLine) {
+                $line = $previousLine.' '.$line;
+                $previousLine = '';
+            }
+
+            if (preg_match('/(.+)\\\$/', $line, $container)) {
+                $previousLine = $container[1];
+            }
+
+            if (!$previousLine) {
+                $cleanedActiveConfig[] = $line;
+            }
+        }
+
+        return $cleanedActiveConfig;
     }
 }
