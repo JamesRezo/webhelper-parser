@@ -38,9 +38,13 @@ class DirectiveTest extends PHPUnit_Framework_TestCase
     public function testBlockDirective()
     {
         $directive = new BlockDirective('context');
+        $subdirective = new BlockDirective('subcontext');
+        $subdirective->add(new SimpleDirective('othername'));
         $directive->add($this->directive);
+        $directive->add($subdirective);
 
         $this->assertTrue($directive->hasDirective('name'));
-        $this->assertFalse($directive->hasDirective('othername'));
+        $this->assertTrue($directive->hasDirective('othername'));
+        $this->assertFalse($directive->hasDirective('doesnotexist'));
     }
 }

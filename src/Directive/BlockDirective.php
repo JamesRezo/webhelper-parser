@@ -43,12 +43,23 @@ class BlockDirective extends Directive implements DirectiveInterface
      */
     public function hasDirective($name)
     {
+        $inSubDirective = false;
+
         foreach ($this->directives as $index => $directive) {
             if ($directive->getName() == $name) {
                 return true;
             }
+
+            if (!$directive->isSimple()) {
+                $inSubDirective = $inSubDirective || $directive->hasDirective($name);
+            }
         }
 
+        return $inSubDirective;
+    }
+
+    public function isSimple()
+    {
         return false;
     }
 }

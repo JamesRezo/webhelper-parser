@@ -51,4 +51,6 @@ interface DirectiveInterface
      * @return bool true if the sub-directive exists, false otherwise
      */
     public function hasDirective($name);
+
+    public function isSimple();
 }

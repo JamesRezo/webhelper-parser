@@ -70,4 +70,6 @@ abstract class Directive implements DirectiveInterface
      * @return bool true if the sub-directive exists, false otherwise
      */
     abstract public function hasDirective($name);
+
+    abstract public function isSimple();
 }

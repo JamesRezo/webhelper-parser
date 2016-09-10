@@ -31,4 +31,9 @@ class SimpleDirective extends Directive implements DirectiveInterface
     {
         return false;
     }
+
+    public function isSimple()
+    {
+        return true;
+    }
 }
