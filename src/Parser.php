@@ -116,6 +116,7 @@ abstract class Parser implements ParserInterface
 
         return $activeConfig;
     }
+
     /**
      * Comon parsing to both apache and nginx.
      *

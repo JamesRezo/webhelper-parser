@@ -3,6 +3,7 @@ Part of [WebHelper](http://github.com/JamesRezo/WebHelper), a Generic Httpd Conf
 
 [![Build Status](https://travis-ci.org/JamesRezo/webhelper-parser.svg?branch=master)](https://travis-ci.org/JamesRezo/webhelper-parser)
 [![Code Climate](https://codeclimate.com/github/JamesRezo/webhelper-parser/badges/gpa.svg)](https://codeclimate.com/github/JamesRezo/webhelper-parser)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/57e3dc27-e915-42d4-9bde-863a8f3bf5f8/big.png)](https://insight.sensiolabs.com/projects/57e3dc27-e915-42d4-9bde-863a8f3bf5f8)
 
 ## Installation
 
