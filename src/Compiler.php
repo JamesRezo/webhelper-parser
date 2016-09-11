@@ -62,10 +62,11 @@ class Compiler
      *
      * @param array  $activeConfig a clean config array of lines
      * @param string $context      the context name
+     * @param string $value        an optional context value
      *
      * @return Directive\BlockDirective a full context of directives
      */
-    public function doCompile($activeConfig, $context = 'main')
+    public function doCompile($activeConfig, $context = 'main', $value = '')
     {
         $tempConfig = [];
 
@@ -74,7 +75,7 @@ class Compiler
             $tempConfig[] = $this->subCompile($activeConfig, $lineConfig);
         }
 
-        return $this->buildBlockDirective($context, '', $tempConfig);
+        return $this->buildBlockDirective($context, $value, $tempConfig);
     }
 
     /**
