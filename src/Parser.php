@@ -11,6 +11,9 @@
 
 namespace WebHelper\Parser;
 
+use WebHelper\Parser\Exception\ParserException;
+use WebHelper\Parser\Exception\InvalidConfigException;
+
 /**
  * Web server configuration generic parser.
  *
@@ -40,8 +43,8 @@ abstract class Parser implements ParserInterface
      *
      * @param string $configFile configuration file
      *
-     * @throws ParserException        if configuration file is not readable
-     * @throws InvalidConfigException if active configuration is empty
+     * @throws Exception\ParserException        if configuration file is not readable
+     * @throws Exception\InvalidConfigException if active configuration is empty
      */
     public function setConfigFile($configFile = '')
     {

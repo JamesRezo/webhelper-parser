@@ -13,6 +13,7 @@ namespace WebHelper\Parser;
 
 use WebHelper\Parser\Directive\SimpleDirective;
 use WebHelper\Parser\Directive\BlockDirective;
+use WebHelper\Parser\Exception\InvalidConfigException;
 
 /**
  * Web server configuration generic compiler.
@@ -84,7 +85,7 @@ class Compiler
      *
      * @return Directive\DirectiveInterface a directive or a container of directives
      *
-     * @throws InvalidConfigException if a simple directive is incorrect
+     * @throws Exception\InvalidConfigException if a simple directive has invalid syntax
      */
     private function subCompile(&$activeConfig, $lineConfig)
     {
@@ -108,7 +109,7 @@ class Compiler
      *
      * @return Directive\BlockDirective a container of directives
      *
-     * @throws InvalidConfigException if a container does not end correctly
+     * @throws Exception\InvalidConfigException if a container does not end correctly
      */
     private function findEndingKey($context, $contextValue, &$activeConfig)
     {

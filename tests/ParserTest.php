@@ -23,7 +23,7 @@ class ParserTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException WebHelper\Parser\ParserException
+     * @expectedException WebHelper\Parser\Exception\ParserException
      */
     public function testCantReadConfigFileException()
     {
@@ -40,7 +40,7 @@ class ParserTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataReadConfigFileException
-     * @expectedException WebHelper\Parser\InvalidConfigException
+     * @expectedException WebHelper\Parser\Exception\InvalidConfigException
      */
     public function testReadConfigFileException($expected, $configFile)
     {

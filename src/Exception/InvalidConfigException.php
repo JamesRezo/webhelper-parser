@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace WebHelper\Parser;
+namespace WebHelper\Parser\Exception;
 
 use DomainException;
 
@@ -19,7 +19,7 @@ use DomainException;
  *
  * @author James <james@rezo.net>
  */
-class InvalidConfigException extends DomainException
+class InvalidConfigException extends DomainException implements ParserExceptionInterface
 {
     /**
      * the exception to throw if the configuration file results as an empty active config.
@@ -33,7 +33,7 @@ class InvalidConfigException extends DomainException
         return new self(sprintf(
             'File "%s" returns an empty configuration',
             $file
-        ), 2);
+        ), self::EMPTY_CONFIG);
     }
 
     /**
@@ -48,7 +48,7 @@ class InvalidConfigException extends DomainException
         return new self(sprintf(
             'No ending directive for %s',
             $key
-        ), 3);
+        ), self::BLOCK_DIRECTIVE_ERROR);
     }
 
     /**
@@ -63,6 +63,6 @@ class InvalidConfigException extends DomainException
         return new self(sprintf(
             'Syntax error for the line "%s"',
             $line
-        ), 4);
+        ), self::SIMPLE_DIRECTIVE_ERROR);
     }
 }

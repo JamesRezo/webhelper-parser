@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace WebHelper\Parser;
+namespace WebHelper\Parser\Exception;
 
 use InvalidArgumentException;
 
@@ -19,7 +19,7 @@ use InvalidArgumentException;
  *
  * @author James <james@rezo.net>
  */
-class ParserException extends InvalidArgumentException
+class ParserException extends InvalidArgumentException implements ParserExceptionInterface
 {
     /**
      * the exception to throw if the configuration file is unreadable.
@@ -35,7 +35,7 @@ class ParserException extends InvalidArgumentException
                 'File "%s" is not readable',
                 $file
             ),
-            1
+            self::UNREADABLE_FILE
         );
     }
 }

@@ -54,7 +54,7 @@ class NginxParserTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException WebHelper\Parser\InvalidConfigException
+     * @expectedException WebHelper\Parser\Exception\InvalidConfigException
      */
     public function testNginxException()
     {
