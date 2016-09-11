@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "php": "^5.4 || ^7.0"
+        "php": "^5.4 || ^7.0",
+        "webmozart/glob": "^4.1"
     },
     "autoload": {
         "psr-4": {

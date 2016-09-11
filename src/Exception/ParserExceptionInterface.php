@@ -23,4 +23,5 @@ interface ParserExceptionInterface
     const BLOCK_DIRECTIVE_ERROR = 3;
     const SIMPLE_DIRECTIVE_ERROR = 4;
     const INVALID_SERVER_PREFIX = 5;
+    const INVALID_DIRECTIVE_MATCHER = 6;
 }

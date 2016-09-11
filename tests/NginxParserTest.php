@@ -15,6 +15,7 @@ use PHPUnit_Framework_TestCase;
 use WebHelper\Parser\NginxParser;
 use WebHelper\Parser\Directive\SimpleDirective;
 use WebHelper\Parser\Directive\BlockDirective;
+use WebHelper\Parser\Server\Server;
 
 class NginxParserTest extends PHPUnit_Framework_TestCase
 {
@@ -22,7 +23,10 @@ class NginxParserTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
+        $server = new Server();
+        $server->setPrefix(realpath(__DIR__.'/data'));
         $this->parser = new NginxParser();
+        $this->parser->setServer($server);
     }
 
     public function dataNginxParser()

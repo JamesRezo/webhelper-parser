@@ -11,6 +11,8 @@
 
 namespace WebHelper\Parser;
 
+use WebHelper\Parser\Server\ServerInterface;
+
 /**
  * Web server configuration generic parser.
  *
@@ -19,11 +21,29 @@ namespace WebHelper\Parser;
 interface ParserInterface
 {
     /**
+     * Setter for the server instance.
+     *
+     * @see Server\ServerInterface Server Documentation
+     *
+     * @param Server\ServerInterface $server the server instance
+     */
+    public function setServer(ServerInterface $server);
+
+    /**
      * Setter for the config file to parse.
      *
      * @param string $configFile configuration file
      */
     public function setConfigFile($configFile = '');
+
+    /**
+     * Getter for the server instance.
+     *
+     * @see Server\ServerInterface Server Documentation
+     *
+     * @param Server\ServerInterface the server instance
+     */
+    public function getServer();
 
     /**
      * Getter for the active config main context.

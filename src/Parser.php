@@ -11,6 +11,7 @@
 
 namespace WebHelper\Parser;
 
+use WebHelper\Parser\Server\ServerInterface;
 use WebHelper\Parser\Exception\ParserException;
 use WebHelper\Parser\Exception\InvalidConfigException;
 
@@ -21,6 +22,9 @@ use WebHelper\Parser\Exception\InvalidConfigException;
  */
 abstract class Parser implements ParserInterface
 {
+    /** @var Server\ServerInterface a server instance */
+    private $server;
+
     /** @var string configuration file */
     private $configFile = '';
 
@@ -37,6 +41,20 @@ abstract class Parser implements ParserInterface
      * @var int
      */
     private $lastError = 0;
+
+    /**
+     * Setter for the server instance.
+     *
+     * @see Server\ServerInterface Server Documentation
+     *
+     * @param Server\ServerInterface $server the server instance
+     */
+    public function setServer(ServerInterface $server)
+    {
+        $this->server = $server;
+
+        return $this;
+    }
 
     /**
      * Setter for the config file to parse.
@@ -64,6 +82,18 @@ abstract class Parser implements ParserInterface
 
         return $this;
     }
+
+     /**
+      * Getter for the server instance.
+      *
+      * @see Server\ServerInterface Server Documentation
+      *
+      * @param Server\ServerInterface the server instance
+      */
+     public function getServer()
+     {
+         return $this->server;
+     }
 
     /**
      * Getter for the active config main context.
