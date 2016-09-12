@@ -53,13 +53,6 @@ interface ParserInterface
     public function getActiveConfig();
 
     /**
-     * Getter for the last error number.
-     *
-     * @return int error number of the last parsing attempt
-     */
-    public function getLastError();
-
-    /**
      * Getter for the content of the configuration file.
      *
      * @return string content of the configuration file

@@ -32,17 +32,6 @@ abstract class Parser implements ParserInterface
     protected $activeConfig = [];
 
     /**
-     * Last pasring attempt error number.
-     *
-     * 0 all is OK
-     * 1 configuration file is not readable
-     * 2 no active configuration lines found
-     *
-     * @var int
-     */
-    private $lastError = 0;
-
-    /**
      * Setter for the server instance.
      *
      * @see Server\ServerInterface Server Documentation
@@ -67,7 +56,6 @@ abstract class Parser implements ParserInterface
     public function setConfigFile($configFile = '')
     {
         if (!is_readable($configFile)) {
-            $this->lastError = 1;
             $this->activeConfig = [];
 
             throw ParserException::forFileUnreadable($configFile);
@@ -75,8 +63,6 @@ abstract class Parser implements ParserInterface
 
         $this->configFile = $configFile;
         if (!$this->parseConfigFile()) {
-            $this->lastError = 2;
-
             throw InvalidConfigException::forEmptyConfig($configFile);
         }
 
@@ -101,16 +87,6 @@ abstract class Parser implements ParserInterface
      * @return Directive\DirectiveInterface the active config
      */
     abstract public function getActiveConfig();
-
-    /**
-     * Getter for the last error number.
-     *
-     * @return int error number of the last parsing attempt
-     */
-    public function getLastError()
-    {
-        return $this->lastError;
-    }
 
     /**
      * Getter for the content of the configuration file.

@@ -114,11 +114,9 @@ use MyParser;
 
 $parser = new MyParser();
 
-$parser->setConfigFile($someConfigFile);
-
-if (!$parser->getLastError()) {
-    $activeConfig = $parser->getActiveConfig();
-}
+$activeConfig = $parser
+    ->setConfigFile($someConfigFile)
+    ->getActiveConfig();
 ```
 
 ## Known issues

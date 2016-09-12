@@ -12,6 +12,7 @@
 namespace WebHelper\Test\Parser;
 
 use PHPUnit_Framework_TestCase;
+use WebHelper\Parser\Server\Server;
 
 class ParserTest extends PHPUnit_Framework_TestCase
 {
@@ -33,8 +34,8 @@ class ParserTest extends PHPUnit_Framework_TestCase
     public function dataReadConfigFileException()
     {
         return [
-            'empty1' => [2, __DIR__.'/data/empty1.conf'],
-            'empty2' => [2, __DIR__.'/data/empty2.conf'],
+            'empty1' => [__DIR__.'/data/empty1.conf'],
+            'empty2' => [__DIR__.'/data/empty2.conf'],
         ];
     }
 
@@ -42,27 +43,9 @@ class ParserTest extends PHPUnit_Framework_TestCase
      * @dataProvider dataReadConfigFileException
      * @expectedException WebHelper\Parser\Exception\InvalidConfigException
      */
-    public function testReadConfigFileException($expected, $configFile)
+    public function testReadConfigFileException($configFile)
     {
         $this->parser->setConfigFile($configFile);
-    }
-
-    public function dataReadConfigFile()
-    {
-        return [
-            'file exists 1' => [0, __DIR__.'/data/dummy.conf'],
-            'file exists 2' => [0, __DIR__.'/data/dos.conf'],
-        ];
-    }
-
-    /**
-     * @dataProvider dataReadConfigFile
-     */
-    public function testReadConfigFile($expected, $configFile)
-    {
-        $this->parser->setConfigFile($configFile);
-
-        $this->assertSame($expected, $this->parser->getLastError());
     }
 
     public function dataIntegration()
@@ -88,5 +71,12 @@ class ParserTest extends PHPUnit_Framework_TestCase
 
         //No blank lines
         $this->assertFalse(in_array('', $activeConfig), 'at least one empty line');
+    }
+
+    public function testGetServer()
+    {
+        $this->parser->setServer(new Server());
+
+        $this->assertEquals('', $this->parser->getServer()->getPrefix());
     }
 }
