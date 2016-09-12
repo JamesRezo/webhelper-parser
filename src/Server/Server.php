@@ -125,28 +125,16 @@ class Server implements ServerInterface
     /**
      * Sets the regexp that will match the starting block directives.
      *
-     * @param string $simpleDirective the regexp that will match the starting block directives
+     * @param string $startMultiLine the regexp that will match the starting block directives
      */
     public function setStartMultiLine($startMultiLine)
     {
-        try {
-            Assert::string($startMultiLine);
-        } catch (InvalidArgumentException $e) {
-            throw ServerException::forInvalidMatcher(
-                $startMultiLine,
-                'The starting block directive matcher is expected to be a string. Got: %s'
-            );
-        }
-
-        if (!$this->isValidRegex($startMultiLine)) {
-            throw ServerException::forInvalidMatcher(
-                $startMultiLine,
-                'The starting block directive matcher is expected to be a regexp '.
-                'containing named subpatterns "key" and "value". Got: %s'
-            );
-        }
-
-        $this->startMultiLine = $startMultiLine;
+        $this->startMultiLine = $this->checkString(
+            $startMultiLine,
+            'The starting block directive matcher is expected to be a string. Got: %s',
+            'The starting block directive matcher is expected to be a regexp '.
+            'containing named subpatterns "key" and "value". Got: %s'
+        );
 
         return $this;
     }
@@ -168,23 +156,12 @@ class Server implements ServerInterface
      */
     public function setEndMultiLine($endMultiLine)
     {
-        try {
-            Assert::string($endMultiLine);
-        } catch (InvalidArgumentException $e) {
-            throw ServerException::forInvalidMatcher(
-                $endMultiLine,
-                'The endind block directive matcher is expected to be a string. Got: %s'
-            );
-        }
-
-        if (!$this->isValidRegex($endMultiLine, false)) {
-            throw ServerException::forInvalidMatcher(
-                $endMultiLine,
-                'The ending block directive matcher is expected to be a regexp . Got: %s'
-            );
-        }
-
-        $this->endMultiLine = $endMultiLine;
+        $this->endMultiLine = $this->checkString(
+            $endMultiLine,
+            'The endind block directive matcher is expected to be a string. Got: %s',
+            'The ending block directive matcher is expected to be a regexp . Got: %s',
+            false
+        );
 
         return $this;
     }
@@ -206,26 +183,41 @@ class Server implements ServerInterface
      */
     public function setSimpleDirective($simpleDirective)
     {
-        try {
-            Assert::string($simpleDirective);
-        } catch (InvalidArgumentException $e) {
-            throw ServerException::forInvalidMatcher(
-                $simpleDirective,
-                'The simple directive matcher is expected to be a string. Got: %s'
-            );
-        }
-
-        if (!$this->isValidRegex($simpleDirective)) {
-            throw ServerException::forInvalidMatcher(
-                $simpleDirective,
-                'The simple directive matcher is expected to be a regexp '.
-                'containing named subpatterns "key" and "value". Got: %s'
-            );
-        }
-
-        $this->simpleDirective = $simpleDirective;
+        $this->simpleDirective = $this->checkString(
+            $simpleDirective,
+            'The simple directive matcher is expected to be a string. Got: %s',
+            'The simple directive matcher is expected to be a regexp '.
+            'containing named subpatterns "key" and "value". Got: %s'
+        );
 
         return $this;
+    }
+
+    /**
+     * Checks if the string matches some criterias.
+     *
+     * @param string $string     the string to check
+     * @param string $message1   message if not a string
+     * @param string $message2   message if not a regexp
+     * @param bool   $subpattern confirms the presence of subpatterns "key" and "value"
+     *
+     * @throws ServerException if the string is invalid
+     *
+     * @return string the string
+     */
+    private function checkString($string, $message1, $message2, $subpattern = true)
+    {
+        try {
+            Assert::string($string);
+        } catch (InvalidArgumentException $e) {
+            throw ServerException::forInvalidMatcher($string, $message1);
+        }
+
+        if (!$this->isValidRegex($string, $subpattern)) {
+            throw ServerException::forInvalidMatcher($string, $message2);
+        }
+
+        return $string;
     }
 
     /**

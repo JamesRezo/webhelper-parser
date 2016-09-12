@@ -43,7 +43,7 @@ class ServerException extends InvalidArgumentException implements ParserExceptio
     /**
      * The exception to throw if a directive matcher is invalid.
      *
-     * @param string $prefix  the matcher
+     * @param string $matcher the matcher
      * @param string $message the error message
      *
      * @return ServerException the exception to throw
