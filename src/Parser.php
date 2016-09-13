@@ -20,10 +20,13 @@ use WebHelper\Parser\Exception\InvalidConfigException;
  *
  * @author James <james@rezo.net>
  */
-abstract class Parser implements ParserInterface
+class Parser implements ParserInterface
 {
     /** @var Server\ServerInterface a server instance */
     private $server;
+
+    /** @var Compiler a Compiler instance */
+    private $compiler;
 
     /** @var string configuration file */
     private $configFile = '';
@@ -43,6 +46,15 @@ abstract class Parser implements ParserInterface
         $this->server = $server;
 
         return $this;
+    }
+
+    public function setCompiler()
+    {
+        $this->compiler = new Compiler(
+            $this->server->getStartMultiLine(),
+            $this->server->getEndMultiLine(),
+            $this->server->getSimpleDirective()
+        );
     }
 
     /**
@@ -86,7 +98,10 @@ abstract class Parser implements ParserInterface
      *
      * @return Directive\DirectiveInterface the active config
      */
-    abstract public function getActiveConfig();
+    public function getActiveConfig()
+    {
+        return $this->compiler->doCompile($this->activeConfig);
+    }
 
     /**
      * Getter for the content of the configuration file.
@@ -142,40 +157,5 @@ abstract class Parser implements ParserInterface
         $this->activeConfig = $this->afterExplode($activeConfig);
 
         return !empty($this->activeConfig);
-    }
-
-    /**
-     * Deletes commented lines and end line comments.
-     *
-     * @param string $config a file content
-     *
-     * @return string a file content without comments
-     */
-    private function deleteComments($config = '')
-    {
-        $config = preg_replace('/^\s*#.*/m', '', $config);
-        $config = preg_replace('/^([^#]+)#.*/m', '$1', $config);
-
-        return $config;
-    }
-
-    /**
-     * Trim all blank lines.
-     *
-     * @param array $activeConfig config file exploded in an array of lines
-     *
-     * @return array an array cleaned of blank lines
-     */
-    private function deleteBlankLines(array $activeConfig = array())
-    {
-        $cleanedActiveConfig = [];
-
-        foreach (array_map('trim', $activeConfig) as $line) {
-            if ($line != '') {
-                $cleanedActiveConfig[] = $line;
-            }
-        }
-
-        return $cleanedActiveConfig;
     }
 }

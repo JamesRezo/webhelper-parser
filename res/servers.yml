@@ -18,7 +18,7 @@ servers:
             inclusion: '/^Include(Optional)?$/'
         parser:
             before: ['deleteComments']
-            after: ['deleteBlankLines', 'continuingDirectives']
+            after: ['continuingDirectives', 'deleteBlankLines']
     nginx:
         minimum_supported_version: '1.0'
         defaults:
