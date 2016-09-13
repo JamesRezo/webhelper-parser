@@ -1,0 +1,40 @@
+# Web Parser parameters
+servers:
+    apache:
+        minimum_supported_version: '2.0'
+        defaults:
+            prefix: '/usr/local/apache2'
+            configuration_file: 'PREFIX/conf/httpd.conf'
+        controlers: ['httpd', 'apachectl', 'apache2ctl']
+        switch:
+            detect: ' -V'
+        extract:
+            version: '/^Server version: Apache\/([0-9\.]+) .*/'
+            root_configuration_file: '/ -D SERVER_CONFIG_FILE="([^"]+)"/'
+        directives:
+            simple: '/^(?<key>\w+)(?<value>.+)$/'
+            start_multiline: '/^<(?<key>\w+)(?<value>[^>]*)>$/'
+            end_multiline: '/^<\/%s>/'
+            inclusion: '/^Include(Optional)?$/'
+        parser:
+            before: ['deleteComments']
+            after: ['deleteBlankLines', 'continuingDirectives']
+    nginx:
+        minimum_supported_version: '1.0'
+        defaults:
+            prefix: '/usr/local/nginx'
+            configuration_file: 'PREFIX/conf/nginx.conf'
+        controlers: ['nginx']
+        switch:
+            detect: ' -V 2>&1'
+        extract:
+            version: '/^nginx version: nginx\/([0-9\.]+).*/'
+            root_configuration_file: '/--conf-path=([^\s]+) /'
+        directives:
+            simple: '/^(?<key>\w+)(?<value>[^;]+);$/'
+            start_multiline: '/^(?<key>\w+)(?<value>[^\{]+)\{$/'
+            end_multiline: '/^\}$/'
+            inclusion: '/^include$/'
+        parser:
+            before: ['deleteComments', 'bracesPlacedOnePerLine']
+            after: ['deleteBlankLines']
