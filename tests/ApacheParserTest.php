@@ -12,10 +12,9 @@
 namespace WebHelper\Test\Parser;
 
 use PHPUnit_Framework_TestCase;
-use WebHelper\Parser\ApacheParser;
 use WebHelper\Parser\Directive\SimpleDirective;
 use WebHelper\Parser\Directive\BlockDirective;
-use WebHelper\Parser\Server\Server;
+use WebHelper\Parser\Factory;
 
 class ApacheParserTest extends PHPUnit_Framework_TestCase
 {
@@ -23,10 +22,9 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $server = new Server();
-        $server->setPrefix(realpath(__DIR__.'/data'));
-        $this->parser = new ApacheParser();
-        $this->parser->setServer($server);
+        $factory = new Factory();
+        $this->parser = $factory->createParser('apache');
+        $this->parser->getServer()->setPrefix(realpath(__DIR__.'/data'));
     }
 
     public function dataApacheParser()

@@ -20,7 +20,10 @@ class ParserTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
+        $server = new Server();
+        $server->setBeforeMethods(['deleteComments'])->setAfterMethods(['deleteBlankLines']);
         $this->parser = new TestParser();
+        $this->parser->setServer($server);
     }
 
     /**
@@ -28,7 +31,7 @@ class ParserTest extends PHPUnit_Framework_TestCase
      */
     public function testCantReadConfigFileException()
     {
-        $this->parser->setConfigFile(__DIR__.'/tmp/http.conf');
+        $this->parser->setConfigFile(__DIR__.'/tmp/config.conf');
     }
 
     public function dataReadConfigFileException()

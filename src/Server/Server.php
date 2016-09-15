@@ -57,6 +57,24 @@ class Server implements ServerInterface
     private $simpleDirective = '';
 
     /**
+     * binaries that can be used to control the webserver.
+     *
+     * @var array
+     */
+    private $binaries = [];
+
+    /**
+     * the parameter string to use to detect version and config file.
+     *
+     * @var string
+     */
+    private $detectionParameter = '';
+
+    private $beforeMethods = [];
+
+    private $afterMethods = [];
+
+    /**
      * Confirms if the server instance has valid parameters.
      *
      * @return bool true if all parameters are initialized, false otherwise
@@ -241,5 +259,63 @@ class Server implements ServerInterface
         }
 
         return true;
+    }
+
+    /**
+     * Gets the list of binaries that can be run to analyze.
+     *
+     * @return array the list of binaries that can be run
+     */
+    public function getBinaries()
+    {
+        return $this->binaries;
+    }
+
+    /**
+     * Sets the list of binaries that can be run to analyze.
+     *
+     * @param array $binaries list of controlers
+     */
+    public function setBinaries(array $binaries)
+    {
+        $this->binaries = $binaries;
+
+        return $this;
+    }
+
+    /**
+     * Sets the parameter string to use to detect version and config file.
+     *
+     * @param string $parameter parameter string
+     */
+    public function setDetectionParameter($parameter = '')
+    {
+        $this->detectionParameter = $parameter;
+
+        return $this;
+    }
+
+    public function getBeforeMethods()
+    {
+        return $this->beforeMethods;
+    }
+
+    public function setBeforeMethods(array $methods)
+    {
+        $this->beforeMethods = $methods;
+
+        return $this;
+    }
+
+    public function getAfterMethods()
+    {
+        return $this->afterMethods;
+    }
+
+    public function setAfterMethods(array $methods)
+    {
+        $this->afterMethods = $methods;
+
+        return $this;
     }
 }

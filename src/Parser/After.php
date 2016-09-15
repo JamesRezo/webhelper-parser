@@ -53,7 +53,7 @@ class After
         $previousLine = '';
         foreach ($activeConfig as $line) {
             if ($previousLine) {
-                $line = $previousLine.' '.$line;
+                $line = $previousLine.' '.trim($line);
                 $previousLine = '';
             }
 

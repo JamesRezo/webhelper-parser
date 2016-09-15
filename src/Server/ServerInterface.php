@@ -84,4 +84,33 @@ interface ServerInterface
      * @param string $simpleDirective the regexp that will match the simple directives
      */
     public function setSimpleDirective($simpleDirective);
+
+    /**
+     * Gets the list of binaries that can be run to analyze.
+     *
+     * @return array the list of binaries that can be run
+     */
+    public function getBinaries();
+
+    /**
+     * Sets the list of binaries that can be run to analyze.
+     *
+     * @param array $binaries list of controlers
+     */
+    public function setBinaries(array $binaries);
+
+    /**
+     * Sets the parameter string to use to detect version and config file.
+     *
+     * @param string $parameter parameter string
+     */
+    public function setDetectionParameter($parameter = '');
+
+    public function getBeforeMethods();
+
+    public function setBeforeMethods(array $methods);
+
+    public function getAfterMethods();
+
+    public function setAfterMethods(array $methods);
 }

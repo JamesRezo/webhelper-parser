@@ -14,6 +14,8 @@ namespace WebHelper\Parser;
 use WebHelper\Parser\Server\ServerInterface;
 use WebHelper\Parser\Exception\ParserException;
 use WebHelper\Parser\Exception\InvalidConfigException;
+use WebHelper\Parser\Parser\Before;
+use WebHelper\Parser\Parser\After;
 
 /**
  * Web server configuration generic parser.
@@ -48,13 +50,11 @@ class Parser implements ParserInterface
         return $this;
     }
 
-    public function setCompiler()
+    public function setCompiler(Compiler $compiler)
     {
-        $this->compiler = new Compiler(
-            $this->server->getStartMultiLine(),
-            $this->server->getEndMultiLine(),
-            $this->server->getSimpleDirective()
-        );
+        $this->compiler = $compiler;
+
+        return $this;
     }
 
     /**
@@ -122,7 +122,9 @@ class Parser implements ParserInterface
      */
     protected function beforeExplode($config)
     {
-        $config = $this->deleteComments($config);
+        foreach ($this->server->getBeforeMethods() as $beforeMethod) {
+            $config = Before::$beforeMethod($config);
+        }
 
         return $config;
     }
@@ -136,7 +138,9 @@ class Parser implements ParserInterface
      */
     protected function afterExplode(array $activeConfig)
     {
-        $activeConfig = $this->deleteBlankLines($activeConfig);
+        foreach ($this->server->getAfterMethods() as $afterMethod) {
+            $activeConfig = After::$afterMethod($activeConfig);
+        }
 
         return $activeConfig;
     }
