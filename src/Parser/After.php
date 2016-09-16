@@ -45,29 +45,40 @@ class After
      *
      * @param array $activeConfig config file exploded in an array of lines
      *
-     * @return array an array cleaned of blank lines
+     * @return array an array with continuing lines gathered as one
      */
     public static function continuingDirectives(array $activeConfig = array())
     {
         $cleanedActiveConfig = [];
 
         //Continuing directives with "\" at the very end of a line are reassembled
-        $previousLine = '';
         foreach ($activeConfig as $line) {
-            if ($previousLine) {
-                $line = $previousLine.' '.trim($line);
-                $previousLine = '';
-            }
-
-            if (preg_match('/(.+)\\\$/', $line, $container)) {
-                $previousLine = $container[1];
-            }
-
-            if (!$previousLine) {
+            if (!static::setLineIfPrevious($line)) {
                 $cleanedActiveConfig[] = $line;
             }
         }
 
         return $cleanedActiveConfig;
+    }
+
+    /**
+     * Helps to gather continuing lines as one.
+     *
+     * @param string &$line a line to add to previous lines or matching a contuining end line marker
+     */
+    private static function setLineIfPrevious(&$line)
+    {
+        static $previousLine = '';
+
+        if ($previousLine) {
+            $line = $previousLine.' '.trim($line);
+            $previousLine = '';
+        }
+
+        if (preg_match('/(.+)\\\$/', $line, $container)) {
+            $previousLine = $container[1];
+        }
+
+        return $previousLine;
     }
 }
