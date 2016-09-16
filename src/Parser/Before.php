@@ -27,8 +27,7 @@ class Before
      */
     public static function deleteComments($config = '')
     {
-        $config = preg_replace('/^\s*#.*/m', '', $config);
-        $config = preg_replace('/^([^#]+)#.*/m', '$1', $config);
+        $config = preg_replace('/^\\s*([^#]+)?#.*/m', '$1', $config);
 
         return $config;
     }
@@ -44,8 +43,7 @@ class Before
      */
     public static function bracesPlacedOnePerLine($config = '')
     {
-        $config = preg_replace('/\{\n?/m', "{\n", $config);
-        $config = preg_replace('/\n?\}/m', "\n}", $config);
+        $config = preg_replace(['/\{\n?/m', '/\n?\}/m'], ["{\n", "\n}"], $config);
 
         return $config;
     }

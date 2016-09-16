@@ -153,4 +153,11 @@ class ServerTest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals($expected, $server->isValid());
     }
+
+    public function testBinaries()
+    {
+        $this->server->setBinaries(['test']);
+
+        $this->assertEquals(['test'], $this->server->getBinaries());
+    }
 }
