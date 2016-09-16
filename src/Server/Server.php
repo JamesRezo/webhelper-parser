@@ -70,8 +70,18 @@ class Server implements ServerInterface
      */
     private $detectionParameter = '';
 
+    /**
+     * The ordered list of methods to apply before convertion.
+     *
+     * @var array
+     */
     private $beforeMethods = [];
 
+    /**
+     * The ordered list of methods to apply after convertion.
+     *
+     * @var array
+     */
     private $afterMethods = [];
 
     /**
@@ -295,11 +305,21 @@ class Server implements ServerInterface
         return $this;
     }
 
+    /**
+     * Gets the ordered list of methods to apply before the config file turns into an array.
+     *
+     * @return array the ordered list of methods to apply before convertion
+     */
     public function getBeforeMethods()
     {
         return $this->beforeMethods;
     }
 
+    /**
+     * Sets the ordered list of methods to apply before the config file turns into an array.
+     *
+     * @param array $methods the ordered list of methods to apply before convertion
+     */
     public function setBeforeMethods(array $methods)
     {
         $this->beforeMethods = $methods;
@@ -307,11 +327,21 @@ class Server implements ServerInterface
         return $this;
     }
 
+    /**
+     * Gets the ordered list of methods to apply after the config file has turned into an array.
+     *
+     * @return array the ordered list of methods to apply after convertion
+     */
     public function getAfterMethods()
     {
         return $this->afterMethods;
     }
 
+    /**
+     * Sets the ordered list of methods to apply after the config file has turned into an array.
+     *
+     * @param array $methods the ordered list of methods to apply after convertion
+     */
     public function setAfterMethods(array $methods)
     {
         $this->afterMethods = $methods;

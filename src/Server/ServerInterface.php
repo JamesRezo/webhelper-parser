@@ -14,7 +14,7 @@ namespace WebHelper\Parser\Server;
 /**
  * Describes a web server instance.
  *
- * a Server instance is <blah...> .
+ * a Server instance is .
  *
  * @author James <james@rezo.net>
  */
@@ -106,11 +106,31 @@ interface ServerInterface
      */
     public function setDetectionParameter($parameter = '');
 
+    /**
+     * Gets the ordered list of methods to apply before the config file turns into an array.
+     *
+     * @return array the ordered list of methods to apply before convertion
+     */
     public function getBeforeMethods();
 
+    /**
+     * Sets the ordered list of methods to apply before the config file turns into an array.
+     *
+     * @param array $methods the ordered list of methods to apply before convertion
+     */
     public function setBeforeMethods(array $methods);
 
+    /**
+     * Gets the ordered list of methods to apply after the config file has turned into an array.
+     *
+     * @return array the ordered list of methods to apply after convertion
+     */
     public function getAfterMethods();
 
+    /**
+     * Sets the ordered list of methods to apply after the config file has turned into an array.
+     *
+     * @param array $methods the ordered list of methods to apply after convertion
+     */
     public function setAfterMethods(array $methods);
 }

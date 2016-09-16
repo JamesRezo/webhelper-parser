@@ -21,8 +21,12 @@ use WebHelper\Parser\Server\Server;
  */
 class Factory
 {
+    /** @var array [description] */
     private $servers = [];
 
+    /**
+     * Factory constructor.
+     */
     public function __construct()
     {
         $yaml = new Yaml();
@@ -30,6 +34,13 @@ class Factory
         $this->servers = $config['servers'];
     }
 
+    /**
+     * Builds a parser instance.
+     *
+     * @param string $name a server specification name
+     *
+     * @return ParserInterface a parser instance
+     */
     public function createParser($name)
     {
         $parser = new Parser();
@@ -47,6 +58,13 @@ class Factory
         return $parser;
     }
 
+    /**
+     * Builds a server instance.
+     *
+     * @param string $name a server specification name
+     *
+     * @return Server\ServerInterface a server instance
+     */
     public function createServer($name)
     {
         $server = new Server();
@@ -65,6 +83,11 @@ class Factory
         return $server;
     }
 
+    /**
+     * Retrieves known servers from res/servers.yml specifications.
+     *
+     * @return array known server names
+     */
     public function getKnownServers()
     {
         return array_keys($this->servers);

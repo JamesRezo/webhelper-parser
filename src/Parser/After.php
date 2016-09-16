@@ -12,6 +12,8 @@
 namespace WebHelper\Parser\Parser;
 
 /**
+ * Methods that can be applied depending of the kind of server after a parsed configuration file turns into an array.
+ *
  * @author James <james@rezo.net>
  */
 class After

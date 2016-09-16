@@ -50,6 +50,11 @@ class Parser implements ParserInterface
         return $this;
     }
 
+    /**
+     * Setter for the compiler instance.
+     *
+     * @param Compiler $compiler the compiler instance
+     */
     public function setCompiler(Compiler $compiler)
     {
         $this->compiler = $compiler;
