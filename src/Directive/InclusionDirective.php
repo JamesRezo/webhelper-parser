@@ -12,6 +12,7 @@
 namespace WebHelper\Parser\Directive;
 
 use Webmozart\Glob\Iterator\GlobIterator;
+use WebHelper\Parser\Compiler;
 
 /**
  * Describes an inclusion directive instance.
@@ -30,8 +31,8 @@ use Webmozart\Glob\Iterator\GlobIterator;
  */
 class InclusionDirective extends BlockDirective implements DirectiveInterface
 {
-    /** @var string the filesystem path where the web server is installed */
-    private $prefix;
+    /** @var \WebHelper\Parser\Compiler the compiler instance */
+    private $compiler;
 
     /** @var array file list pointed with that directive */
     private $files = [];
@@ -39,15 +40,16 @@ class InclusionDirective extends BlockDirective implements DirectiveInterface
     /**
      * Specific constructor for inclusion directives.
      *
-     * @param string $name   the name of the key/context
-     * @param string $value  the value of the key/context
-     * @param string $prefix the filesystem path where the web server is installed
+     * @param string                     $name     the name of the key/context
+     * @param string                     $value    the value of the key/context
+     * @param \WebHelper\Parser\Compiler $compiler the compiler instance
      */
-    public function __construct($name, $value = '', $prefix = '')
+    public function __construct($name, $value, Compiler $compiler)
     {
         parent::__construct($name, $value);
-        $this->prefix = $prefix;
+        $this->compiler = $compiler;
         $this->setFiles();
+        $this->compileFiles();
     }
 
     /**
@@ -69,7 +71,7 @@ class InclusionDirective extends BlockDirective implements DirectiveInterface
         $path = $this->getValue();
 
         if (!preg_match('#^/#', $path)) {
-            $path = $this->prefix.'/'.$path;
+            $path = $this->compiler->getPrefix().'/'.$path;
         }
 
         $iterator = new GlobIterator($path);
@@ -78,5 +80,13 @@ class InclusionDirective extends BlockDirective implements DirectiveInterface
         }
 
         return $this;
+    }
+
+    public function compileFiles()
+    {
+        foreach ($this->files as $file) {
+            $directive = $this->compiler->doCompile([], $this->getName(), $file);
+            $this->add($directive);
+        }
     }
 }

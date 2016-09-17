@@ -22,7 +22,7 @@ use WebHelper\Parser\Parser\Checker;
  */
 class Factory
 {
-    /** @var array [description] */
+    /** @var array List of known servers */
     private $servers = [];
 
     /**

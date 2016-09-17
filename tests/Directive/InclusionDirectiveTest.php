@@ -13,25 +13,32 @@ namespace WebHelper\Test\Parser\Directive;
 
 use PHPUnit_Framework_TestCase;
 use WebHelper\Parser\Directive\InclusionDirective;
+use WebHelper\Parser\Compiler;
 
 class InclusionDirectiveTest extends PHPUnit_Framework_TestCase
 {
     public function dataInclusionDirective()
     {
-        $prefix = realpath(__DIR__.'/../data');
+        $compiler = new Compiler(
+            '/^(?<key>\w+)(?<value>[^\{]+)\{$/',
+            '/^\}$/',
+            '/^(?<key>\w+)(?<value>[^;]+);$/',
+            '/^include$/'
+        );
+        $compiler->setPrefix(realpath(__DIR__.'/../data'));
 
         return [
             'relative value with a prefix' => [
-                [$prefix.'/empty1.conf'],
+                [realpath(__DIR__.'/../data/empty1.conf')],
                 'include',
                 'empty1.conf',
-                $prefix,
+                $compiler,
             ],
             'absolute value' => [
                 [realpath(__DIR__.'/../data/empty1.conf')],
                 'include',
                 realpath(__DIR__.'/../data/empty1.conf'),
-                '/tmp',
+                $compiler,
             ],
             'with a glob' => [
                 [
@@ -41,8 +48,8 @@ class InclusionDirectiveTest extends PHPUnit_Framework_TestCase
                     realpath(__DIR__.'/../data/empty2.conf'),
                 ],
                 'include',
-                $prefix.'/*.conf',
-                '/tmp',
+                realpath(__DIR__.'/../data').'/*.conf',
+                $compiler,
             ],
         ];
     }
@@ -50,9 +57,9 @@ class InclusionDirectiveTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider dataInclusionDirective
      */
-    public function testInclusionDirective($expected, $name, $value, $prefix)
+    public function testInclusionDirective($expected, $name, $value, $compiler)
     {
-        $directive = new InclusionDirective($name, $value, $prefix);
+        $directive = new InclusionDirective($name, $value, $compiler);
 
         $this->assertEquals($expected, $directive->getFiles());
     }

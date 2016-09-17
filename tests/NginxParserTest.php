@@ -16,6 +16,7 @@ use WebHelper\Parser\Directive\SimpleDirective;
 use WebHelper\Parser\Directive\BlockDirective;
 use WebHelper\Parser\Directive\InclusionDirective;
 use WebHelper\Parser\Factory;
+use WebHelper\Parser\Compiler;
 
 class NginxParserTest extends PHPUnit_Framework_TestCase
 {
@@ -32,13 +33,21 @@ class NginxParserTest extends PHPUnit_Framework_TestCase
     {
         $data = [];
 
+        $compiler = new Compiler(
+            '/^(?<key>\w+)(?<value>[^\{]+)\{$/',
+            '/^\}$/',
+            '/^(?<key>\w+)(?<value>[^;]+);$/',
+            '/^include$/'
+        );
+        $compiler->setPrefix(realpath(__DIR__.'/data'));
+
         $main = new BlockDirective('main');
         $events = new BlockDirective('events');
         $http = new BlockDirective('http');
         $server = new BlockDirective('server');
         $location = new BlockDirective('location', '/');
         $root = new SimpleDirective('root', 'html');
-        $include = new InclusionDirective('include', 'test/*', realpath(__DIR__.'/data'));
+        $include = new InclusionDirective('include', 'test/*', $compiler);
         $main->add($events)->add($http->add($server->add($location->add($root))))->add($include);
         $data['test'] = [
             $main,

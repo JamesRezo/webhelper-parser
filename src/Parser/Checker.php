@@ -78,7 +78,7 @@ class Checker
      */
     public function isValidRegex()
     {
-        set_error_handler(function($errno, $errstr) {
+        set_error_handler(function ($errno, $errstr) {
             throw new InvalidArgumentException($errstr, $errno);
         }, E_WARNING);
 

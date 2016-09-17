@@ -77,6 +77,16 @@ class Compiler
     }
 
     /**
+     * Gets an absolute path prefix.
+     *
+     * @param string an absolute path prefix
+     */
+    public function getPrefix()
+    {
+        return $this->prefix;
+    }
+
+    /**
      * Sets an absolute path prefix.
      *
      * @param string $prefix an absolute path prefix
@@ -195,7 +205,7 @@ class Compiler
     private function buildSimpleDirective($key, $value)
     {
         if (preg_match($this->inclusionDirective, $key)) {
-            return new InclusionDirective($key, $value, $this->prefix);
+            return new InclusionDirective($key, $value, $this);
         }
 
         return new SimpleDirective($key, $value);
