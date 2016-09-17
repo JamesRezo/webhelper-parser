@@ -61,11 +61,11 @@ class Server implements ServerInterface
      */
     private $simpleDirective = '';
 
-     /**
-      * The string to match an inclusion directive.
-      *
-      * @var string
-      */
+    /**
+     * The string to match an inclusion directive.
+     *
+     * @var string
+     */
     private $inclusionDirective = '';
 
     /**
@@ -291,13 +291,13 @@ class Server implements ServerInterface
     /**
      * Confirms if a directive matcher is a valid regex.
      *
-     * @param  string $directive the directive matcher to check
-     * @param  string $message1  message exception if the matcher is not a string
-     * @param  string $message2  message exception if the matcher is not a valid regex
+     * @param string $directive the directive matcher to check
+     * @param string $message1  message exception if the matcher is not a string
+     * @param string $message2  message exception if the matcher is not a valid regex
      *
      * @throws ServerException if the directive matcher is invalid
      *
-     * @return bool            true if the directive matcher is valid
+     * @return bool true if the directive matcher is valid
      */
     private function isValidDirective($directive, $message1, $message2)
     {

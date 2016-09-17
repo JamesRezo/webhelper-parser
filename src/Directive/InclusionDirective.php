@@ -11,7 +11,7 @@
 
 namespace WebHelper\Parser\Directive;
 
-// use Webmozart\Glob\Iterator\GlobIterator;
+use Webmozart\Glob\Iterator\GlobIterator;
 
 /**
  * Describes an inclusion directive instance.
@@ -38,7 +38,7 @@ class InclusionDirective extends BlockDirective implements DirectiveInterface
 
     /**
      * Specific constructor for inclusion directives.
-     * 
+     *
      * @param string $name   the name of the key/context
      * @param string $value  the value of the key/context
      * @param string $prefix the filesystem path where the web server is installed
@@ -47,15 +47,29 @@ class InclusionDirective extends BlockDirective implements DirectiveInterface
     {
         parent::__construct($name, $value);
         $this->prefix = $prefix;
+        $this->setFiles();
     }
 
-    /*public function setFiles()
+    /**
+     * Gets the detected files of the directive.
+     *
+     * @return array detected files
+     */
+    public function getFiles()
+    {
+        return $this->files;
+    }
+
+    /**
+     * Detects and memoizes the included files.
+     */
+    public function setFiles()
     {
         $this->files = [];
         $path = $this->getValue();
 
         if (!preg_match('#^/#', $path)) {
-            $path = $this->prefix.$path;
+            $path = $this->prefix.'/'.$path;
         }
 
         $iterator = new GlobIterator($path);
@@ -64,5 +78,5 @@ class InclusionDirective extends BlockDirective implements DirectiveInterface
         }
 
         return $this;
-    }*/
+    }
 }

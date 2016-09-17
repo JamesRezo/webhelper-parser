@@ -63,9 +63,9 @@ class Compiler
     /**
      * Constructor.
      *
-     * @param string $startMultiLine  match as a starting multi-line directive
-     * @param string $endMultiLine    match as an ending multi-line directive
-     * @param string $simpleDirective match a simple directive
+     * @param string $startMultiLine     match as a starting multi-line directive
+     * @param string $endMultiLine       match as an ending multi-line directive
+     * @param string $simpleDirective    match a simple directive
      * @param string $inclusionDirective match an inclusion directive
      */
     public function __construct($startMultiLine, $endMultiLine, $simpleDirective, $inclusionDirective)
