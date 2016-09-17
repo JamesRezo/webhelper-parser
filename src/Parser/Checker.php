@@ -78,30 +78,21 @@ class Checker
      */
     public function isValidRegex()
     {
-        set_error_handler('self::warningOnPregMatch', E_WARNING);
+        set_error_handler(function($errno, $errstr) {
+            throw new InvalidArgumentException($errstr, $errno);
+        }, E_WARNING);
+
+        $valid = true;
 
         try {
             preg_match($this->string, 'tester');
         } catch (InvalidArgumentException $e) {
-            return false;
+            $valid = false;
         }
 
         restore_error_handler();
 
-        return true;
-    }
-
-    /**
-     * Throws an exception instead of a warning.
-     *
-     * @param int    $errno  error code of a bad preg_match call
-     * @param string $errstr error message of a bad preg_match call
-     *
-     * @throws InvalidArgumentException [<description>]
-     */
-    private function warningOnPregMatch($errno, $errstr)
-    {
-        throw new InvalidArgumentException($errstr, $errno);
+        return $valid;
     }
 
     /**
