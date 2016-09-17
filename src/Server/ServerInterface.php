@@ -95,7 +95,7 @@ interface ServerInterface
     /**
      * Sets the regexp that will match the inclusion directives.
      *
-     * @param string $simpleDirective the regexp that will match the inclusion directives
+     * @param string $inclusionDirective the regexp that will match the inclusion directives
      */
     public function setInclusionDirective($inclusionDirective);
 
