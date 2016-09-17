@@ -114,6 +114,13 @@ interface ServerInterface
     public function setBinaries(array $binaries);
 
     /**
+     * Gets the parameter string to use to detect version and config file.
+     *
+     * @return string parameter string
+     */
+    public function getDetectionParameter();
+
+    /**
      * Sets the parameter string to use to detect version and config file.
      *
      * @param string $parameter parameter string

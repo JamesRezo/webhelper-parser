@@ -341,6 +341,16 @@ class Server implements ServerInterface
     }
 
     /**
+     * Gets the parameter string to use to detect version and config file.
+     *
+     * @return string parameter string
+     */
+    public function getDetectionParameter()
+    {
+        return $this->detectionParameter;
+    }
+
+    /**
      * Sets the parameter string to use to detect version and config file.
      *
      * @param string $parameter parameter string

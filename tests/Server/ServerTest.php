@@ -164,6 +164,13 @@ class ServerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(['test'], $this->server->getBinaries());
     }
 
+    public function testDetectionParameter()
+    {
+        $this->server->setDetectionParameter(' -test');
+
+        $this->assertEquals(' -test', $this->server->getDetectionParameter());
+    }
+
     /**
      * @dataProvider dataSetWrongEndorInclusionDirective
      * @expectedException WebHelper\Parser\Server\ServerException
