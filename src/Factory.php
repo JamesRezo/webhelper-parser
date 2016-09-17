@@ -13,6 +13,7 @@ namespace WebHelper\Parser;
 
 use Symfony\Component\Yaml\Yaml;
 use WebHelper\Parser\Server\Server;
+use WebHelper\Parser\Parser\Checker;
 
 /**
  * WebHelper Factory.
@@ -70,6 +71,7 @@ class Factory
         $server = new Server();
         if (in_array($name, $this->getKnownServers())) {
             $server
+                ->setChecker(new Checker())
                 ->setStartMultiLine($this->servers[$name]['directives']['start_multiline'])
                 ->setEndMultiLine($this->servers[$name]['directives']['end_multiline'])
                 ->setSimpleDirective($this->servers[$name]['directives']['simple'])

@@ -11,9 +11,7 @@
 
 namespace WebHelper\Parser\Server;
 
-use InvalidArgumentException;
-use Webmozart\Assert\Assert;
-use Webmozart\PathUtil\Path;
+use WebHelper\Parser\Parser\Checker;
 
 /**
  * A web server instance.
@@ -22,6 +20,13 @@ use Webmozart\PathUtil\Path;
  */
 class Server implements ServerInterface
 {
+    /**
+     * a Checker instance.
+     *
+     * @var WebHelper\Parser\Parser\Checker
+     */
+    private $checker;
+
     /**
      * The filesystem path where the web server is installed.
      *
@@ -85,6 +90,18 @@ class Server implements ServerInterface
     private $afterMethods = [];
 
     /**
+     * Sets the Checker instance.
+     *
+     * @param Checker $checker a Checker instance
+     */
+    public function setChecker(Checker $checker)
+    {
+        $this->checker = $checker;
+
+        return $this;
+    }
+
+    /**
      * Confirms if the server instance has valid parameters.
      *
      * @return bool true if all parameters are initialized, false otherwise
@@ -110,7 +127,7 @@ class Server implements ServerInterface
     }
 
     /**
-     * Sets the prefix of a server isntance.
+     * Sets the prefix of a server instance.
      *
      * @throws ServerException if the prefix is invalid
      *
@@ -118,20 +135,14 @@ class Server implements ServerInterface
      */
     public function setPrefix($prefix)
     {
-        try {
-            Assert::string($prefix);
-        } catch (InvalidArgumentException $e) {
+        if (!$this->checker->setString($prefix)->getString()) {
             throw ServerException::forInvalidPrefix($prefix, 'The path is expected to be a string. Got: %s');
         }
 
-        if (!Path::isAbsolute($prefix)) {
-            throw ServerException::forInvalidPrefix($prefix, 'The path is expected to be absolute. Got: %s');
-        }
-
-        if (!is_dir($prefix)) {
+        if (!$this->checker->isValidAbsolutePath()) {
             throw ServerException::forInvalidPrefix(
                 $prefix,
-                'The path is expected to be an existing directory. Got: %s'
+                'The path is expected to be absolute and an existing directory. Got: %s'
             );
         }
 
@@ -157,12 +168,22 @@ class Server implements ServerInterface
      */
     public function setStartMultiLine($startMultiLine)
     {
-        $this->startMultiLine = $this->checkString(
-            $startMultiLine,
-            'The starting block directive matcher is expected to be a string. Got: %s',
-            'The starting block directive matcher is expected to be a regexp '.
-            'containing named subpatterns "key" and "value". Got: %s'
-        );
+        if (!$this->checker->setString($startMultiLine)->getString()) {
+            throw ServerException::forInvalidMatcher(
+                $startMultiLine,
+                'The starting block directive matcher is expected to be a string. Got: %s'
+            );
+        }
+
+        if (!$this->checker->hasKeyAndValueSubPattern()) {
+            throw ServerException::forInvalidMatcher(
+                $startMultiLine,
+                'The starting block directive matcher is expected to be a regexp '.
+                'containing named subpatterns "key" and "value". Got: %s'
+            );
+        }
+
+        $this->startMultiLine = $startMultiLine;
 
         return $this;
     }
@@ -184,12 +205,21 @@ class Server implements ServerInterface
      */
     public function setEndMultiLine($endMultiLine)
     {
-        $this->endMultiLine = $this->checkString(
-            $endMultiLine,
-            'The endind block directive matcher is expected to be a string. Got: %s',
-            'The ending block directive matcher is expected to be a regexp . Got: %s',
-            false
-        );
+        if (!$this->checker->setString($endMultiLine)->getString()) {
+            throw ServerException::forInvalidMatcher(
+                $endMultiLine,
+                'The ending block directive matcher is expected to be a string. Got: %s'
+            );
+        }
+
+        if (!$this->checker->isValidRegex()) {
+            throw ServerException::forInvalidMatcher(
+                $endMultiLine,
+                'The ending block directive matcher is expected to be a regexp.'
+            );
+        }
+
+        $this->endMultiLine = $endMultiLine;
 
         return $this;
     }
@@ -211,64 +241,24 @@ class Server implements ServerInterface
      */
     public function setSimpleDirective($simpleDirective)
     {
-        $this->simpleDirective = $this->checkString(
-            $simpleDirective,
-            'The simple directive matcher is expected to be a string. Got: %s',
-            'The simple directive matcher is expected to be a regexp '.
-            'containing named subpatterns "key" and "value". Got: %s'
-        );
+        if (!$this->checker->setString($simpleDirective)->getString()) {
+            throw ServerException::forInvalidMatcher(
+                $simpleDirective,
+                'The simple directive matcher is expected to be a string. Got: %s'
+            );
+        }
+
+        if (!$this->checker->hasKeyAndValueSubPattern()) {
+            throw ServerException::forInvalidMatcher(
+                $simpleDirective,
+                'The simple directive matcher is expected to be a regexp '.
+                'containing named subpatterns "key" and "value". Got: %s'
+            );
+        }
+
+        $this->simpleDirective = $simpleDirective;
 
         return $this;
-    }
-
-    /**
-     * Checks if the string matches some criterias.
-     *
-     * @param string $string     the string to check
-     * @param string $message1   message if not a string
-     * @param string $message2   message if not a regexp
-     * @param bool   $subpattern confirms the presence of subpatterns "key" and "value"
-     *
-     * @throws ServerException if the string is invalid
-     *
-     * @return string the string
-     */
-    private function checkString($string, $message1, $message2, $subpattern = true)
-    {
-        try {
-            Assert::string($string);
-        } catch (InvalidArgumentException $e) {
-            throw ServerException::forInvalidMatcher($string, $message1);
-        }
-
-        if (!$this->isValidRegex($string, $subpattern)) {
-            throw ServerException::forInvalidMatcher($string, $message2);
-        }
-
-        return $string;
-    }
-
-    /**
-     * Confirms if a matcher is a valid reguler expression.
-     *
-     * A directive matcher MUST contain a key and a value named subpattern.
-     *
-     * @param string $matcher    the matcher to validate
-     * @param bool   $subpattern confirms the presence of subpatterns "key" and "value"
-     *
-     * @return bool true if the matcher is valid, false otherwise
-     */
-    private function isValidRegex($matcher, $subpattern = true)
-    {
-        if (false === @preg_match($matcher, 'tester')) {
-            return false;
-        }
-
-        if ($subpattern && (false === strpos($matcher, '(?<key>') || false === strpos($matcher, '(?<value>'))) {
-            return false;
-        }
-
-        return true;
     }
 
     /**

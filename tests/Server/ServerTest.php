@@ -13,6 +13,7 @@ namespace WebHelper\Test\Parser\Server;
 
 use PHPUnit_Framework_TestCase;
 use WebHelper\Parser\Server\Server;
+use WebHelper\Parser\Parser\Checker;
 
 class ServerTest extends PHPUnit_Framework_TestCase
 {
@@ -21,6 +22,7 @@ class ServerTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->server = new Server();
+        $this->server->setChecker(new Checker());
     }
 
     public function dataSetWrongPrefix()
@@ -134,6 +136,7 @@ class ServerTest extends PHPUnit_Framework_TestCase
     {
         $server = new Server();
         $server
+            ->setChecker(new Checker())
             ->setPrefix(realpath(__DIR__.'/../data'))
             ->setEndMultiLine('/^<\/end>/')
             ->setStartMultiLine('/^<(?<key>\w+)(?<value>.+)>$/')
