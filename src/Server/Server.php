@@ -61,6 +61,13 @@ class Server implements ServerInterface
      */
     private $simpleDirective = '';
 
+     /**
+      * The string to match an inclusion directive.
+      *
+      * @var string
+      */
+    private $inclusionDirective = '';
+
     /**
      * binaries that can be used to control the webserver.
      *
@@ -241,6 +248,42 @@ class Server implements ServerInterface
         )) {
             $this->simpleDirective = $simpleDirective;
         }
+
+        return $this;
+    }
+
+    /**
+     * Gets the regexp that will match the inclusion directives.
+     *
+     * @return string the regexp that will match the inclusion directives
+     */
+    public function getInclusionDirective()
+    {
+        return $this->inclusionDirective;
+    }
+
+    /**
+     * Sets the regexp that will match the inclusion directives.
+     *
+     * @param string $simpleDirective the regexp that will match the inclusion directives
+     */
+    public function setInclusionDirective($inclusionDirective)
+    {
+        if (!$this->checker->setString($inclusionDirective)->getString()) {
+            throw ServerException::forInvalidMatcher(
+                $inclusionDirective,
+                'The inclusion directive matcher is expected to be a string. Got: %s'
+            );
+        }
+
+        if (!$this->checker->isValidRegex()) {
+            throw ServerException::forInvalidMatcher(
+                $inclusionDirective,
+                'The inclusion directive matcher is expected to be a regexp.'
+            );
+        }
+
+        $this->inclusionDirective = $inclusionDirective;
 
         return $this;
     }

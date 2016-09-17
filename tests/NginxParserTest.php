@@ -14,6 +14,7 @@ namespace WebHelper\Test\Parser;
 use PHPUnit_Framework_TestCase;
 use WebHelper\Parser\Directive\SimpleDirective;
 use WebHelper\Parser\Directive\BlockDirective;
+use WebHelper\Parser\Directive\InclusionDirective;
 use WebHelper\Parser\Factory;
 
 class NginxParserTest extends PHPUnit_Framework_TestCase
@@ -37,7 +38,8 @@ class NginxParserTest extends PHPUnit_Framework_TestCase
         $server = new BlockDirective('server');
         $location = new BlockDirective('location', '/');
         $root = new SimpleDirective('root', 'html');
-        $main->add($events)->add($http->add($server->add($location->add($root))));
+        $include = new InclusionDirective('include', 'test/*', realpath(__DIR__.'/data'));
+        $main->add($events)->add($http->add($server->add($location->add($root))))->add($include);
         $data['test'] = [
             $main,
             __DIR__.'/data/nginx/test.conf',

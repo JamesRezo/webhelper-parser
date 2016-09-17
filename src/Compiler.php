@@ -13,6 +13,7 @@ namespace WebHelper\Parser;
 
 use WebHelper\Parser\Directive\SimpleDirective;
 use WebHelper\Parser\Directive\BlockDirective;
+use WebHelper\Parser\Directive\InclusionDirective;
 use WebHelper\Parser\Exception\InvalidConfigException;
 
 /**
@@ -44,17 +45,47 @@ class Compiler
     private $simpleDirective;
 
     /**
+     * The string to match an inclusion Directive.
+     *
+     * @var string
+     */
+    private $inclusionDirective;
+
+    /**
+     * An absolute path prefix.
+     *
+     * The compiler needs an absolute path prefix to find included files set with a relative path
+     *
+     * @var string
+     */
+    private $prefix;
+
+    /**
      * Constructor.
      *
      * @param string $startMultiLine  match as a starting multi-line directive
      * @param string $endMultiLine    match as an ending multi-line directive
      * @param string $simpleDirective match a simple directive
+     * @param string $inclusionDirective match an inclusion directive
      */
-    public function __construct($startMultiLine, $endMultiLine, $simpleDirective)
+    public function __construct($startMultiLine, $endMultiLine, $simpleDirective, $inclusionDirective)
     {
         $this->startMultiLine = $startMultiLine;
         $this->endMultiLine = $endMultiLine;
         $this->simpleDirective = $simpleDirective;
+        $this->inclusionDirective = $inclusionDirective;
+    }
+
+    /**
+     * Sets an absolute path prefix.
+     *
+     * @param string $prefix an absolute path prefix
+     */
+    public function setPrefix($prefix = '')
+    {
+        $this->prefix = $prefix;
+
+        return $this;
     }
 
     /**
@@ -98,7 +129,7 @@ class Compiler
             throw InvalidConfigException::forSimpleDirectiveSyntaxError($lineConfig);
         }
 
-        return new SimpleDirective(trim($container['key']), trim($container['value']));
+        return $this->buildSimpleDirective(trim($container['key']), trim($container['value']));
     }
 
     /**
@@ -147,5 +178,26 @@ class Compiler
         }
 
         return $block;
+    }
+
+    /**
+     * Build a SimpleDirective or an InclusionDirective.
+     *
+     * Remember that inclusion are parsed as simple directives but are block directives
+     *
+     * @see Directive\InclusionDirective Inclusion Doc
+     *
+     * @param string $key   a directive's name
+     * @param string $value a directive's value
+     *
+     * @return Directive\SimpleDirective|Directive\InclusionDirective the Directive
+     */
+    private function buildSimpleDirective($key, $value)
+    {
+        if (preg_match($this->inclusionDirective, $key)) {
+            return new InclusionDirective($key, $value, $this->prefix);
+        }
+
+        return new SimpleDirective($key, $value);
     }
 }

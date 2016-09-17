@@ -107,7 +107,7 @@ class ServerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($startDirective, $this->server->getStartMultiLine());
     }
 
-    public function dataSetWrongEndDirective()
+    public function dataSetWrongEndorInclusionDirective()
     {
         return [
             'not a string' => [null],
@@ -116,7 +116,7 @@ class ServerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider dataSetWrongEndDirective
+     * @dataProvider dataSetWrongEndorInclusionDirective
      * @expectedException WebHelper\Parser\Server\ServerException
      */
     public function testSetWrongEndDirective($endDirective)
@@ -162,5 +162,14 @@ class ServerTest extends PHPUnit_Framework_TestCase
         $this->server->setBinaries(['test']);
 
         $this->assertEquals(['test'], $this->server->getBinaries());
+    }
+
+    /**
+     * @dataProvider dataSetWrongEndorInclusionDirective
+     * @expectedException WebHelper\Parser\Server\ServerException
+     */
+    public function testSetWrongInclusionDirective($inclusionDirective)
+    {
+        $this->server->setInclusionDirective($inclusionDirective);
     }
 }

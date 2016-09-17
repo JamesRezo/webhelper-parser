@@ -51,7 +51,8 @@ class Factory
         $compiler = new Compiler(
             $parser->getServer()->getStartMultiLine(),
             $parser->getServer()->getEndMultiLine(),
-            $parser->getServer()->getSimpleDirective()
+            $parser->getServer()->getSimpleDirective(),
+            $parser->getServer()->getInclusionDirective()
         );
 
         $parser->setCompiler($compiler);
@@ -75,6 +76,7 @@ class Factory
                 ->setStartMultiLine($this->servers[$name]['directives']['start_multiline'])
                 ->setEndMultiLine($this->servers[$name]['directives']['end_multiline'])
                 ->setSimpleDirective($this->servers[$name]['directives']['simple'])
+                ->setInclusionDirective($this->servers[$name]['directives']['inclusion'])
                 ->setBinaries($this->servers[$name]['controlers'])
                 ->setDetectionParameter($this->servers[$name]['switch']['detect'])
                 ->setBeforeMethods($this->servers[$name]['parser']['before'])

@@ -86,6 +86,20 @@ interface ServerInterface
     public function setSimpleDirective($simpleDirective);
 
     /**
+     * Gets the regexp that will match the inclusion directives.
+     *
+     * @return string the regexp that will match the inclusion directives
+     */
+    public function getInclusionDirective();
+
+    /**
+     * Sets the regexp that will match the inclusion directives.
+     *
+     * @param string $simpleDirective the regexp that will match the inclusion directives
+     */
+    public function setInclusionDirective($inclusionDirective);
+
+    /**
      * Gets the list of binaries that can be run to analyze.
      *
      * @return array the list of binaries that can be run
