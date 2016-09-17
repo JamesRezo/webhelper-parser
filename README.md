@@ -6,6 +6,10 @@ Part of [WebHelper](http://github.com/JamesRezo/WebHelper), a Generic Httpd Conf
 [![Code Coverage](https://scrutinizer-ci.com/g/JamesRezo/webhelper-parser/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/JamesRezo/webhelper-parser/?branch=master)
 [![Code Climate](https://codeclimate.com/github/JamesRezo/webhelper-parser/badges/gpa.svg)](https://codeclimate.com/github/JamesRezo/webhelper-parser)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/2ef11e52-9098-4c72-a0c2-c83996e9bf62/mini.png)](https://insight.sensiolabs.com/projects/2ef11e52-9098-4c72-a0c2-c83996e9bf62)
+[![Dependency Status](https://www.versioneye.com/user/projects/57d100ee87b0f6002e27f9e9/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57d100ee87b0f6002e27f9e9)
+[![Latest Stable Version](https://poser.pugx.org/webhelper/parser/v/stable)](https://packagist.org/packages/webhelper/parser)
+[![License](https://poser.pugx.org/webhelper/parser/license)](https://packagist.org/packages/webhelper/parser)
+[![Dependency Status](https://www.versioneye.com/user/projects/57d100ee87b0f6002e27f9e9/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57d100ee87b0f6002e27f9e9)
 
 ## Installation
 
@@ -58,7 +62,3 @@ $activeConfig = $parser
 ## Known issues
 
 - Does not support old macos9 file format.
-
-## License
-
-MIT

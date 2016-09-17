@@ -3,6 +3,7 @@
     "description": "WebHelper Parser Interface",
     "type": "library",
     "license": "MIT",
+    "keywords": ["web", "parser", "configuration", "apache", "nginx", "server", "devops"],
     "authors": [
         {
             "name": "James",
