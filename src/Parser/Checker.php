@@ -78,11 +78,22 @@ class Checker
      */
     public function isValidRegex()
     {
-        if (false === @preg_match($this->string, 'tester')) {
+        set_error_handler('self::warning_on_preg_match', E_WARNING);
+
+        try{
+            preg_match($this->string, 'tester');
+        } catch (InvalidArgumentException $e) {
             return false;
         }
 
+        restore_error_handler();
+
         return true;
+    }
+
+    private function warning_on_preg_match($errno, $errstr)
+    {
+        throw new InvalidArgumentException($errstr, $errno);
     }
 
     /**
