@@ -15,11 +15,13 @@ Part of [WebHelper](http://github.com/JamesRezo/WebHelper), a Generic Httpd Conf
 
 Parse an Apache configuration file:
 ```php
-use WebHelper\Parser\ApacheParser;
+use WebHelper\Parser\Factory;
 use WebHelper\Parser\ParserException;
 use WebHelper\Parser\InvalidConfigException;
 
-$parser = new ApacheParser();
+$factory = new Factory()
+$parser = $factory->createParser('apache');
+$parser->getServer()->setPrefix('/usr');
 
 try {
     $activeConfig = $parser
@@ -40,83 +42,17 @@ try {
 
 Or the same with Nginx
 ```php
-use WebHelper\Parser\NginxParser;
-use WebHelper\Parser\ParserException;
-use WebHelper\Parser\InvalidConfigException;
+use WebHelper\Parser\Factory;
 
-$parser = new NginxParser();
+$factory = new Factory()
+$parser = $factory->createParser('nginx');
+$parser->getServer()->setPrefix('/usr/sbin/');
 
 $activeConfig = $parser
         ->setConfigFile('/etc/nginx/nginx.conf')
         ->getActiveConfig();
 
 // etc...
-```
-
-## Advanced Usage
-
-Create a concrete class extending Parser :
-```php
-use WebHelper\Parser\Parser;
-
-class MyParser extends Parser
-{
-    //optionally
-    protected function beforeExplode($config)
-    {
-        // ... code ...
-        return $config;
-    }
-
-    //optionally
-    protected function afterExplode($config)
-    {
-        // ... code ...
-        return $config;
-    }
-
-    //mandatory
-    public function getActiveConfig()
-    {
-        // ... code ...
-        $this->activeConfig = [ ... ];
-        // ... code ...
-
-        return $this->activeConfig;
-    }
-}
-```
-
-Use the compiler to parse specific configuration items :
-```php
-use WebHelper\Parser\Parser;
-
-class MyParser extends Parser
-{
-    public function getActiveConfig()
-    {
-        $compiler = new Compiler(
-            //a Regexp that matches the begining of a multiline syntax
-            $mutilineStarter,
-            //a Regexp that matches the end of a multiline syntax
-            $multilineEnder,
-            //a Regexp that matches a simple line syntax
-            $simplelineChecker
-        );
-        return $compiler->doCompile($this->activeConfig);
-    }
-}
-```
-
-Use it :
-```php
-use MyParser;
-
-$parser = new MyParser();
-
-$activeConfig = $parser
-    ->setConfigFile($someConfigFile)
-    ->getActiveConfig();
 ```
 
 ## Known issues
