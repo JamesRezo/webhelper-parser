@@ -53,7 +53,7 @@ class After
 
         //Continuing directives with "\" at the very end of a line are reassembled
         foreach ($activeConfig as $line) {
-            if (!static::setLineIfPrevious($line)) {
+            if (!self::setLineIfPrevious($line)) {
                 $cleanedActiveConfig[] = $line;
             }
         }

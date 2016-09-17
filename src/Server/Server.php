@@ -23,7 +23,7 @@ class Server implements ServerInterface
     /**
      * a Checker instance.
      *
-     * @var WebHelper\Parser\Parser\Checker
+     * @var \WebHelper\Parser\Parser\Checker
      */
     private $checker;
 
@@ -168,22 +168,14 @@ class Server implements ServerInterface
      */
     public function setStartMultiLine($startMultiLine)
     {
-        if (!$this->checker->setString($startMultiLine)->getString()) {
-            throw ServerException::forInvalidMatcher(
-                $startMultiLine,
-                'The starting block directive matcher is expected to be a string. Got: %s'
-            );
+        if ($this->isValidDirective(
+            $startMultiLine,
+            'The starting block directive matcher is expected to be a string. Got: %s',
+            'The starting block directive matcher is expected to be a regexp '.
+            'containing named subpatterns "key" and "value". Got: %s'
+        )) {
+            $this->startMultiLine = $startMultiLine;
         }
-
-        if (!$this->checker->hasKeyAndValueSubPattern()) {
-            throw ServerException::forInvalidMatcher(
-                $startMultiLine,
-                'The starting block directive matcher is expected to be a regexp '.
-                'containing named subpatterns "key" and "value". Got: %s'
-            );
-        }
-
-        $this->startMultiLine = $startMultiLine;
 
         return $this;
     }
@@ -241,24 +233,46 @@ class Server implements ServerInterface
      */
     public function setSimpleDirective($simpleDirective)
     {
-        if (!$this->checker->setString($simpleDirective)->getString()) {
+        if ($this->isValidDirective(
+            $simpleDirective,
+            'The simple directive matcher is expected to be a string. Got: %s',
+            'The simple directive matcher is expected to be a regexp '.
+            'containing named subpatterns "key" and "value". Got: %s'
+        )) {
+            $this->simpleDirective = $simpleDirective;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Confirms if a directive matcher is a valid regex.
+     *
+     * @param  string $directive the directive matcher to check
+     * @param  string $message1  message exception if the matcher is not a string
+     * @param  string $message2  message exception if the matcher is not a valid regex
+     *
+     * @throws ServerException if the directive matcher is invalid
+     *
+     * @return bool            true if the directive matcher is valid
+     */
+    private function isValidDirective($directive, $message1, $message2)
+    {
+        if (!$this->checker->setString($directive)->getString()) {
             throw ServerException::forInvalidMatcher(
-                $simpleDirective,
-                'The simple directive matcher is expected to be a string. Got: %s'
+                $directive,
+                $message1
             );
         }
 
         if (!$this->checker->hasKeyAndValueSubPattern()) {
             throw ServerException::forInvalidMatcher(
-                $simpleDirective,
-                'The simple directive matcher is expected to be a regexp '.
-                'containing named subpatterns "key" and "value". Got: %s'
+                $directive,
+                $message2
             );
         }
 
-        $this->simpleDirective = $simpleDirective;
-
-        return $this;
+        return true;
     }
 
     /**
