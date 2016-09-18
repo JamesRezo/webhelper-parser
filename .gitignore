@@ -2,3 +2,5 @@
 /build/
 !/build/.gitkeep
 /composer.lock
+/phpunit.xml
+/phpbench.json
