@@ -19,6 +19,10 @@ servers:
         parser:
             before: ['deleteComments']
             after: ['continuingDirectives', 'deleteBlankLines']
+        dumper:
+            simple: '%s %s'
+            start_multiline: '<%s %s>'
+            end_multiline: '</%s>'
     nginx:
         minimum_supported_version: '1.0'
         defaults:
@@ -38,3 +42,7 @@ servers:
         parser:
             before: ['deleteComments', 'bracesPlacedOnePerLine']
             after: ['deleteBlankLines']
+        dumper:
+            simple: '%s %s;'
+            start_multiline: '%s %s {'
+            end_multiline: '}'

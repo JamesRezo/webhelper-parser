@@ -81,6 +81,9 @@ class Factory
                 ->setDetectionParameter($this->servers[$name]['switch']['detect'])
                 ->setBeforeMethods($this->servers[$name]['parser']['before'])
                 ->setAfterMethods($this->servers[$name]['parser']['after'])
+                ->setDumperSimpleDirective($this->servers[$name]['dumper']['simple'])
+                ->setDumperStartDirective($this->servers[$name]['dumper']['start_multiline'])
+                ->setDumperEndDirective($this->servers[$name]['dumper']['end_multiline'])
             ;
         }
 

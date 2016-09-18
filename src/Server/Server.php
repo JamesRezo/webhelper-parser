@@ -97,6 +97,27 @@ class Server implements ServerInterface
     private $afterMethods = [];
 
     /**
+     * The simple directive syntax when dumped.
+     *
+     * @var string
+     */
+    private $dumperSimpleDirective = '';
+
+    /**
+     * The starting block directive syntax when dumped.
+     *
+     * @var string
+     */
+    private $dumperStartDirective = '';
+
+    /**
+     * The ending block directive syntax when dumped.
+     *
+     * @var string
+     */
+    private $dumperEndDirective = '';
+
+    /**
      * Sets the Checker instance.
      *
      * @param Checker $checker a Checker instance
@@ -402,6 +423,72 @@ class Server implements ServerInterface
     public function setAfterMethods(array $methods)
     {
         $this->afterMethods = $methods;
+
+        return $this;
+    }
+
+    /**
+     * Gets the simple directive syntax when dumped.
+     *
+     * @return string the simple directive syntax when dumped
+     */
+    public function getDumperSimpleDirective()
+    {
+        return $this->dumperSimpleDirective;
+    }
+
+    /**
+     * Gets the starting block directive syntax when dumped.
+     *
+     * @return string the starting block directive syntax when dumped
+     */
+    public function getDumperStartDirective()
+    {
+        return $this->dumperStartDirective;
+    }
+
+    /**
+     * Gets the ending block directive syntax when dumped.
+     *
+     * @return string the ending block directive syntax when dumped
+     */
+    public function getDumperEndDirective()
+    {
+        return $this->dumperEndDirective;
+    }
+
+     /**
+      * Sets the simple directive syntax when dumped.
+      *
+      * @param string $simpleDirective the simple directive syntax when dumped
+      */
+     public function setDumperSimpleDirective($simpleDirective)
+     {
+         $this->dumperSimpleDirective = $simpleDirective;
+
+         return $this;
+     }
+
+   /**
+    * Sets the starting block directive syntax when dumped.
+    *
+    * @param string $startMultiLine the starting block directive syntax when dumped
+    */
+   public function setDumperStartDirective($startMultiLine)
+   {
+       $this->dumperStartDirective = $startMultiLine;
+
+       return $this;
+   }
+
+    /**
+     * Sets the ending block directive syntax when dumped.
+     *
+     * @param string $endMultiLine the ending block directive syntax when dumped
+     */
+    public function setDumperEndDirective($endMultiLine)
+    {
+        $this->dumperEndDirective = $endMultiLine;
 
         return $this;
     }

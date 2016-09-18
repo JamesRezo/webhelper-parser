@@ -11,6 +11,9 @@
 
 namespace WebHelper\Parser\Directive;
 
+use IteratorAggregate;
+use ArrayIterator;
+
 /**
  * Describes a block directive instance or a context.
  *
@@ -18,7 +21,7 @@ namespace WebHelper\Parser\Directive;
  *
  * @author James <james@rezo.net>
  */
-class BlockDirective extends Directive implements DirectiveInterface
+class BlockDirective extends Directive implements DirectiveInterface, IteratorAggregate
 {
     /** @var array orderd list of sub directives */
     private $directives = [];
@@ -85,5 +88,15 @@ class BlockDirective extends Directive implements DirectiveInterface
     public function isSimple()
     {
         return false;
+    }
+
+    /**
+     * Gets the sub directives as a Traversable array.
+     *
+     * @return ArrayIterator the sub directives
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->directives);
     }
 }

@@ -154,4 +154,46 @@ interface ServerInterface
      * @param array $methods the ordered list of methods to apply after convertion
      */
     public function setAfterMethods(array $methods);
+
+    /**
+     * Gets the simple directive syntax when dumped.
+     *
+     * @return string the simple directive syntax when dumped
+     */
+    public function getDumperSimpleDirective();
+
+    /**
+     * Gets the starting block directive syntax when dumped.
+     *
+     * @return string the starting block directive syntax when dumped
+     */
+    public function getDumperStartDirective();
+
+    /**
+     * Gets the ending block directive syntax when dumped.
+     *
+     * @return string the ending block directive syntax when dumped
+     */
+    public function getDumperEndDirective();
+
+    /**
+     * Sets the simple directive syntax when dumped.
+     *
+     * @param string $simpleDirective the simple directive syntax when dumped
+     */
+    public function setDumperSimpleDirective($simpleDirective);
+
+    /**
+     * Sets the starting block directive syntax when dumped.
+     *
+     * @param string $startMultiLine the starting block directive syntax when dumped
+     */
+    public function setDumperStartDirective($startMultiLine);
+
+    /**
+     * Sets the ending block directive syntax when dumped.
+     *
+     * @param string $endMultiLine the ending block directive syntax when dumped
+     */
+    public function setDumperEndDirective($endMultiLine);
 }
