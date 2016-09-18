@@ -9,7 +9,6 @@ Part of [WebHelper](http://github.com/JamesRezo/WebHelper), a Generic Httpd Conf
 [![Dependency Status](https://www.versioneye.com/user/projects/57d100ee87b0f6002e27f9e9/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57d100ee87b0f6002e27f9e9)
 [![Latest Stable Version](https://poser.pugx.org/webhelper/parser/v/stable)](https://packagist.org/packages/webhelper/parser)
 [![License](https://poser.pugx.org/webhelper/parser/license)](https://packagist.org/packages/webhelper/parser)
-[![Dependency Status](https://www.versioneye.com/user/projects/57d100ee87b0f6002e27f9e9/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57d100ee87b0f6002e27f9e9)
 
 ## Installation
 
