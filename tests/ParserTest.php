@@ -37,8 +37,8 @@ class ParserTest extends PHPUnit_Framework_TestCase
     public function dataReadConfigFileException()
     {
         return [
-            'empty1' => [__DIR__.'/data/empty1.conf'],
-            'empty2' => [__DIR__.'/data/empty2.conf'],
+            'empty1' => [__DIR__.'/data/empty/empty1.conf'],
+            'empty2' => [__DIR__.'/data/empty/empty2.conf'],
         ];
     }
 

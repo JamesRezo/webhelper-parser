@@ -18,6 +18,7 @@ class NginxParserBench
     public function createNginx()
     {
         $factory = new Factory();
+
         return $factory->createParser('nginx');
     }
 

@@ -18,6 +18,7 @@ class ApacheParserBench
     public function createApache()
     {
         $factory = new Factory();
+
         return $factory->createParser('apache');
     }
 

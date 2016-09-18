@@ -58,6 +58,7 @@ class Parser implements ParserInterface
     public function setCompiler(Compiler $compiler)
     {
         $this->compiler = $compiler;
+        $this->compiler->setParser($this);
 
         return $this;
     }
@@ -105,7 +106,7 @@ class Parser implements ParserInterface
      */
     public function getActiveConfig()
     {
-        return $this->compiler->setPrefix($this->getServer()->getPrefix())->doCompile($this->activeConfig);
+        return $this->compiler->doCompile($this->activeConfig);
     }
 
     /**

@@ -24,6 +24,13 @@ use WebHelper\Parser\Exception\InvalidConfigException;
 class Compiler
 {
     /**
+     * The parser instance.
+     *
+     * @var Parser
+     */
+    private $parser;
+
+    /**
      * The string to match as a starting multi-line directive.
      *
      * @var string
@@ -52,15 +59,6 @@ class Compiler
     private $inclusionDirective;
 
     /**
-     * An absolute path prefix.
-     *
-     * The compiler needs an absolute path prefix to find included files set with a relative path
-     *
-     * @var string
-     */
-    private $prefix;
-
-    /**
      * Constructor.
      *
      * @param string $startMultiLine     match as a starting multi-line directive
@@ -77,23 +75,13 @@ class Compiler
     }
 
     /**
-     * Gets an absolute path prefix.
+     * Sets the parser instance.
      *
-     * @param string an absolute path prefix
+     * @param Parser $parser the parser instance
      */
-    public function getPrefix()
+    public function setParser(Parser $parser)
     {
-        return $this->prefix;
-    }
-
-    /**
-     * Sets an absolute path prefix.
-     *
-     * @param string $prefix an absolute path prefix
-     */
-    public function setPrefix($prefix = '')
-    {
-        $this->prefix = $prefix;
+        $this->parser = $parser;
 
         return $this;
     }
@@ -205,7 +193,7 @@ class Compiler
     private function buildSimpleDirective($key, $value)
     {
         if (preg_match($this->inclusionDirective, $key)) {
-            return new InclusionDirective($key, $value, $this);
+            return new InclusionDirective($key, $value, $this->parser);
         }
 
         return new SimpleDirective($key, $value);

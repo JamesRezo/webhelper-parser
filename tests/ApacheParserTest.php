@@ -98,7 +98,7 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
      */
     public function testApacheException()
     {
-        $this->parser->setConfigFile(__DIR__.'/data/apache/wrong-syntax.conf')->getActiveConfig();
+        $this->parser->setConfigFile(__DIR__.'/data/apache/wrong/wrong-syntax.conf')->getActiveConfig();
     }
 
     public function testContinuingLine()

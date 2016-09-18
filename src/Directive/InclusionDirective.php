@@ -12,7 +12,7 @@
 namespace WebHelper\Parser\Directive;
 
 use Webmozart\Glob\Iterator\GlobIterator;
-use WebHelper\Parser\Compiler;
+use WebHelper\Parser\Parser;
 
 /**
  * Describes an inclusion directive instance.
@@ -31,8 +31,8 @@ use WebHelper\Parser\Compiler;
  */
 class InclusionDirective extends BlockDirective implements DirectiveInterface
 {
-    /** @var \WebHelper\Parser\Compiler the compiler instance */
-    private $compiler;
+    /** @var \WebHelper\Parser\Parser the parser instance */
+    private $parser;
 
     /** @var array file list pointed with that directive */
     private $files = [];
@@ -40,14 +40,14 @@ class InclusionDirective extends BlockDirective implements DirectiveInterface
     /**
      * Specific constructor for inclusion directives.
      *
-     * @param string                     $name     the name of the key/context
-     * @param string                     $value    the value of the key/context
-     * @param \WebHelper\Parser\Compiler $compiler the compiler instance
+     * @param string                   $name   the name of the key/context
+     * @param string                   $value  the value of the key/context
+     * @param \WebHelper\Parser\Parser $parser the parser instance
      */
-    public function __construct($name, $value, Compiler $compiler)
+    public function __construct($name, $value, Parser $parser)
     {
         parent::__construct($name, $value);
-        $this->compiler = $compiler;
+        $this->parser = $parser;
         $this->setFiles();
         $this->compileFiles();
     }
@@ -71,7 +71,7 @@ class InclusionDirective extends BlockDirective implements DirectiveInterface
         $path = $this->getValue();
 
         if (!preg_match('#^/#', $path)) {
-            $path = $this->compiler->getPrefix().'/'.$path;
+            $path = $this->parser->getServer()->getPrefix().'/'.$path;
         }
 
         $iterator = new GlobIterator($path);
@@ -82,11 +82,16 @@ class InclusionDirective extends BlockDirective implements DirectiveInterface
         return $this;
     }
 
+    /**
+     * Fills the block directives by compiling the memoized files.
+     */
     public function compileFiles()
     {
         foreach ($this->files as $file) {
-            $directive = $this->compiler->doCompile([], $this->getName(), $file);
-            $this->add($directive);
+            $activeConfig = $this->parser->setConfigFile($file)->getActiveConfig();
+            $this->add($activeConfig);
         }
+
+        return $this;
     }
 }

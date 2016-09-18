@@ -13,43 +13,37 @@ namespace WebHelper\Test\Parser\Directive;
 
 use PHPUnit_Framework_TestCase;
 use WebHelper\Parser\Directive\InclusionDirective;
-use WebHelper\Parser\Compiler;
+use WebHelper\Parser\Factory;
 
 class InclusionDirectiveTest extends PHPUnit_Framework_TestCase
 {
     public function dataInclusionDirective()
     {
-        $compiler = new Compiler(
-            '/^(?<key>\w+)(?<value>[^\{]+)\{$/',
-            '/^\}$/',
-            '/^(?<key>\w+)(?<value>[^;]+);$/',
-            '/^include$/'
-        );
-        $compiler->setPrefix(realpath(__DIR__.'/../data'));
+        $factory = new Factory();
+        $parser = $factory->createParser('apache');
+        $parser->getServer()->setPrefix(realpath(__DIR__.'/../data'));
 
         return [
             'relative value with a prefix' => [
-                [realpath(__DIR__.'/../data/empty1.conf')],
+                [realpath(__DIR__.'/../data/dummy.conf')],
                 'include',
-                'empty1.conf',
-                $compiler,
+                'dummy.conf',
+                $parser,
             ],
             'absolute value' => [
-                [realpath(__DIR__.'/../data/empty1.conf')],
+                [realpath(__DIR__.'/../data/dummy.conf')],
                 'include',
-                realpath(__DIR__.'/../data/empty1.conf'),
-                $compiler,
+                realpath(__DIR__.'/../data/dummy.conf'),
+                $parser,
             ],
             'with a glob' => [
                 [
                     realpath(__DIR__.'/../data/dos.conf'),
                     realpath(__DIR__.'/../data/dummy.conf'),
-                    realpath(__DIR__.'/../data/empty1.conf'),
-                    realpath(__DIR__.'/../data/empty2.conf'),
                 ],
                 'include',
                 realpath(__DIR__.'/../data').'/*.conf',
-                $compiler,
+                $parser,
             ],
         ];
     }
@@ -57,9 +51,9 @@ class InclusionDirectiveTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider dataInclusionDirective
      */
-    public function testInclusionDirective($expected, $name, $value, $compiler)
+    public function testInclusionDirective($expected, $name, $value, $parser)
     {
-        $directive = new InclusionDirective($name, $value, $compiler);
+        $directive = new InclusionDirective($name, $value, $parser);
 
         $this->assertEquals($expected, $directive->getFiles());
     }
