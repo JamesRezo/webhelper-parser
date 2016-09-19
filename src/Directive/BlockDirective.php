@@ -11,8 +11,7 @@
 
 namespace WebHelper\Parser\Directive;
 
-use IteratorAggregate;
-use ArrayIterator;
+use WebHelper\Parser\Server\ServerInterface;
 
 /**
  * Describes a block directive instance or a context.
@@ -21,7 +20,7 @@ use ArrayIterator;
  *
  * @author James <james@rezo.net>
  */
-class BlockDirective extends Directive implements DirectiveInterface, IteratorAggregate
+class BlockDirective extends Directive implements DirectiveInterface
 {
     /** @var array orderd list of sub directives */
     private $directives = [];
@@ -91,12 +90,48 @@ class BlockDirective extends Directive implements DirectiveInterface, IteratorAg
     }
 
     /**
-     * Gets the sub directives as a Traversable array.
+     * Dumps the directive respecting a server syntax.
      *
-     * @return ArrayIterator the sub directives
+     * @param ServerInterface $server a server instance
+     * @param int             $spaces the indentation spaces
+     *
+     * @return string the dumped directive
      */
-    public function getIterator()
+    public function dump(ServerInterface $server, $spaces = 0)
     {
-        return new ArrayIterator($this->directives);
+        $config = '';
+
+        if (!$this->isMainContext()) {
+            $value = $this->getValue() ? ' '.$this->getValue() : '';
+            $config .= str_repeat(' ', $spaces).sprintf(
+                $server->getDumperStartDirective(),
+                $this->getName(),
+                $value
+            ).PHP_EOL;
+        }
+
+        foreach ($this->directives as $directive) {
+            $config .= $directive->dump($server, $spaces + ($this->isMainContext() ? 0 : 4));
+        }
+
+        if (!$this->isMainContext()) {
+            $config .= str_repeat(' ', $spaces).sprintf(
+                $server->getDumperEndDirective(),
+                $this->getName(),
+                $value
+            ).PHP_EOL;
+        }
+
+        return $config;
+    }
+
+    /**
+     * Confirms if a Block directive is a 'main' context.
+     *
+     * @return bool true if the name of the block directive is 'main', false otherwise
+     */
+    private function isMainContext()
+    {
+        return 'main' == $this->getName();
     }
 }

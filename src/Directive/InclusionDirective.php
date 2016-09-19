@@ -13,6 +13,7 @@ namespace WebHelper\Parser\Directive;
 
 use Webmozart\Glob\Iterator\GlobIterator;
 use WebHelper\Parser\Parser;
+use WebHelper\Parser\Server\ServerInterface;
 
 /**
  * Describes an inclusion directive instance.
@@ -93,5 +94,24 @@ class InclusionDirective extends BlockDirective implements DirectiveInterface
         }
 
         return $this;
+    }
+
+    /**
+     * Dumps the directive respecting a server syntax.
+     *
+     * @param ServerInterface $server a server instance
+     * @param int             $spaces the indentation spaces
+     *
+     * @return string the dumped directive
+     */
+    public function dump(ServerInterface $server, $spaces = 0)
+    {
+        $value = $this->getValue() ? ' '.$this->getValue() : '';
+
+        return str_repeat(' ', $spaces).sprintf(
+            $server->getDumperSimpleDirective(),
+            $this->getName(),
+            $value
+        ).PHP_EOL;
     }
 }

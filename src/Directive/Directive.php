@@ -11,6 +11,8 @@
 
 namespace WebHelper\Parser\Directive;
 
+use WebHelper\Parser\Server\ServerInterface;
+
 /**
  * This is a simple directive implementation that other Directives can inherit from.
  *
@@ -87,4 +89,14 @@ abstract class Directive implements DirectiveInterface
      * @return bool true if the directive is simple, false otherwise
      */
     abstract public function isSimple();
+
+    /**
+     * Dumps the directive respecting a server syntax.
+     *
+     * @param ServerInterface $server a server instance
+     * @param int             $spaces the indentation spaces
+     *
+     * @return string the dumped directive
+     */
+    abstract public function dump(ServerInterface $server, $spaces = 0);
 }

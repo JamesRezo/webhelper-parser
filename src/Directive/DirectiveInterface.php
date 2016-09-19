@@ -11,6 +11,8 @@
 
 namespace WebHelper\Parser\Directive;
 
+use WebHelper\Parser\Server\ServerInterface;
+
 /**
  * Describes a directive instance.
  *
@@ -60,4 +62,23 @@ interface DirectiveInterface
      * @return bool true if the directive is simple, false otherwise
      */
     public function isSimple();
+
+    /**
+     * Dumps recursively the active configuration as a file.
+     *
+     * @param DirectiveInterface $activeConfig the active configuration to dump
+     * @param int                $spaces       the indentation spaces
+     *
+     * @return string the file output
+     */
+
+    /**
+     * Dumps the directive respecting a server syntax.
+     *
+     * @param ServerInterface $server a server instance
+     * @param int             $spaces the indentation spaces
+     *
+     * @return string the dumped directive
+     */
+    public function dump(ServerInterface $server, $spaces = 0);
 }

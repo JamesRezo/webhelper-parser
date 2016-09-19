@@ -20,8 +20,8 @@ servers:
             before: ['deleteComments']
             after: ['continuingDirectives', 'deleteBlankLines']
         dumper:
-            simple: '%s %s'
-            start_multiline: '<%s %s>'
+            simple: '%s%s'
+            start_multiline: '<%s%s>'
             end_multiline: '</%s>'
     nginx:
         minimum_supported_version: '1.0'
@@ -43,6 +43,6 @@ servers:
             before: ['deleteComments', 'bracesPlacedOnePerLine']
             after: ['deleteBlankLines']
         dumper:
-            simple: '%s %s;'
-            start_multiline: '%s %s {'
+            simple: '%s%s;'
+            start_multiline: '%s%s {'
             end_multiline: '}'

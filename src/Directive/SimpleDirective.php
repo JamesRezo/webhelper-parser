@@ -11,6 +11,8 @@
 
 namespace WebHelper\Parser\Directive;
 
+use WebHelper\Parser\Server\ServerInterface;
+
 /**
  * Describes a simple directive instance.
  *
@@ -42,5 +44,24 @@ class SimpleDirective extends Directive implements DirectiveInterface
     public function isSimple()
     {
         return true;
+    }
+
+    /**
+     * Dumps the directive respecting a server syntax.
+     *
+     * @param ServerInterface $server a server instance
+     * @param int             $spaces the indentation spaces
+     *
+     * @return string the dumped directive
+     */
+    public function dump(ServerInterface $server, $spaces = 0)
+    {
+        $value = $this->getValue() ? ' '.$this->getValue() : '';
+
+        return str_repeat(' ', $spaces).sprintf(
+            $server->getDumperSimpleDirective(),
+            $this->getName(),
+            $value
+        ).PHP_EOL;
     }
 }
