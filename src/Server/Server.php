@@ -457,29 +457,29 @@ class Server implements ServerInterface
         return $this->dumperEndDirective;
     }
 
-     /**
-      * Sets the simple directive syntax when dumped.
-      *
-      * @param string $simpleDirective the simple directive syntax when dumped
-      */
-     public function setDumperSimpleDirective($simpleDirective)
-     {
-         $this->dumperSimpleDirective = $simpleDirective;
+    /**
+     * Sets the simple directive syntax when dumped.
+     *
+     * @param string $simpleDirective the simple directive syntax when dumped
+     */
+    public function setDumperSimpleDirective($simpleDirective)
+    {
+        $this->dumperSimpleDirective = $simpleDirective;
 
-         return $this;
-     }
+        return $this;
+    }
 
-   /**
-    * Sets the starting block directive syntax when dumped.
-    *
-    * @param string $startMultiLine the starting block directive syntax when dumped
-    */
-   public function setDumperStartDirective($startMultiLine)
-   {
-       $this->dumperStartDirective = $startMultiLine;
+    /**
+     * Sets the starting block directive syntax when dumped.
+     *
+     * @param string $startMultiLine the starting block directive syntax when dumped
+     */
+    public function setDumperStartDirective($startMultiLine)
+    {
+        $this->dumperStartDirective = $startMultiLine;
 
-       return $this;
-   }
+        return $this;
+    }
 
     /**
      * Sets the ending block directive syntax when dumped.
