@@ -3,7 +3,7 @@
     "description": "WebHelper Parser Interface",
     "type": "library",
     "license": "MIT",
-    "keywords": ["web", "parser", "configuration", "apache", "nginx", "server", "devops"],
+    "keywords": ["web", "parser", "configuration", "apache", "nginx", "server", "devops", "webhelper"],
     "authors": [
         {
             "name": "James",
@@ -26,6 +26,6 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8 || ^5.5"
+        "jamesrezo/qatools": "^1.0"
     }
 }
