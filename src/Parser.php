@@ -8,14 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace WebHelper\Parser;
 
-use WebHelper\Parser\Server\ServerInterface;
-use WebHelper\Parser\Exception\ParserException;
 use WebHelper\Parser\Exception\InvalidConfigException;
-use WebHelper\Parser\Parser\Before;
+use WebHelper\Parser\Exception\ParserException;
 use WebHelper\Parser\Parser\After;
+use WebHelper\Parser\Parser\Before;
+use WebHelper\Parser\Server\ServerInterface;
 
 /**
  * Web server configuration generic parser.

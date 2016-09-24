@@ -8,12 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace WebHelper\Test\Parser\Directive;
 
 use PHPUnit_Framework_TestCase;
-use WebHelper\Parser\Directive\SimpleDirective;
 use WebHelper\Parser\Directive\BlockDirective;
+use WebHelper\Parser\Directive\SimpleDirective;
 
 class DirectiveTest extends PHPUnit_Framework_TestCase
 {

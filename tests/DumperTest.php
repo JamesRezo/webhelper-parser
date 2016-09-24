@@ -8,16 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace WebHelper\Test\Parser;
 
 use PHPUnit_Framework_TestCase;
-use WebHelper\Parser\Factory;
-use WebHelper\Parser\Dumper;
-use WebHelper\Parser\Server\Server;
-use WebHelper\Parser\Directive\SimpleDirective;
-use WebHelper\Parser\Directive\InclusionDirective;
 use WebHelper\Parser\Directive\BlockDirective;
+use WebHelper\Parser\Directive\InclusionDirective;
+use WebHelper\Parser\Directive\SimpleDirective;
+use WebHelper\Parser\Dumper;
+use WebHelper\Parser\Factory;
+use WebHelper\Parser\Server\Server;
 
 class DumperTest extends PHPUnit_Framework_TestCase
 {
@@ -42,8 +41,7 @@ class DumperTest extends PHPUnit_Framework_TestCase
             ->add(new SimpleDirective('Directive', 'dummy_value'))
             ->add(new InclusionDirective('Inclusion', 'files*', $parser))
             ->add($block)
-            ->add(new SimpleDirective('AfterBlankLineDirective', 'some-text and spaces'))
-        ;
+            ->add(new SimpleDirective('AfterBlankLineDirective', 'some-text and spaces'));
 
         return [
             'nominal case' => [
