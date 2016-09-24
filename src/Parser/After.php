@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace WebHelper\Parser\Parser;
 
 /**
@@ -25,7 +24,7 @@ class After
      *
      * @return array an array cleaned of blank lines
      */
-    public static function deleteBlankLines(array $activeConfig = array())
+    public static function deleteBlankLines(array $activeConfig = [])
     {
         $cleanedActiveConfig = [];
 
@@ -47,7 +46,7 @@ class After
      *
      * @return array an array with continuing lines gathered as one
      */
-    public static function continuingDirectives(array $activeConfig = array())
+    public static function continuingDirectives(array $activeConfig = [])
     {
         $cleanedActiveConfig = [];
 

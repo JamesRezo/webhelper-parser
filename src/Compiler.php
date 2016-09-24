@@ -8,12 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace WebHelper\Parser;
 
-use WebHelper\Parser\Directive\SimpleDirective;
 use WebHelper\Parser\Directive\BlockDirective;
 use WebHelper\Parser\Directive\InclusionDirective;
+use WebHelper\Parser\Directive\SimpleDirective;
 use WebHelper\Parser\Exception\InvalidConfigException;
 
 /**
@@ -113,9 +112,9 @@ class Compiler
      * @param array  $activeConfig a clean config array of directives
      * @param string $lineConfig   a line
      *
-     * @return Directive\DirectiveInterface a directive or a container of directives
-     *
      * @throws Exception\InvalidConfigException if a simple directive has invalid syntax
+     *
+     * @return Directive\DirectiveInterface a directive or a container of directives
      */
     private function subCompile(&$activeConfig, $lineConfig)
     {
@@ -137,9 +136,9 @@ class Compiler
      * @param string $contextValue a container's value
      * @param array  $activeConfig a clean config array of lines
      *
-     * @return Directive\BlockDirective a container of directives
-     *
      * @throws Exception\InvalidConfigException if a container does not end correctly
+     *
+     * @return Directive\BlockDirective a container of directives
      */
     private function findEndingKey($context, $contextValue, &$activeConfig)
     {

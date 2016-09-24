@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace WebHelper\Parser\Server;
 
 use WebHelper\Parser\Parser\Checker;
@@ -157,9 +156,10 @@ class Server implements ServerInterface
     /**
      * Sets the prefix of a server instance.
      *
-     * @throws ServerException if the prefix is invalid
      *
      * @param string $prefix the filesystem path where the web server is installed
+     *
+     * @throws ServerException if the prefix is invalid
      */
     public function setPrefix($prefix)
     {

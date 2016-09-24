@@ -8,12 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace WebHelper\Parser\Directive;
 
-use Webmozart\Glob\Iterator\GlobIterator;
 use WebHelper\Parser\Parser;
 use WebHelper\Parser\Server\ServerInterface;
+use Webmozart\Glob\Iterator\GlobIterator;
 
 /**
  * Describes an inclusion directive instance.

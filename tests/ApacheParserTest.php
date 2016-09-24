@@ -8,12 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace WebHelper\Test\Parser;
 
 use PHPUnit_Framework_TestCase;
-use WebHelper\Parser\Directive\SimpleDirective;
 use WebHelper\Parser\Directive\BlockDirective;
+use WebHelper\Parser\Directive\SimpleDirective;
 use WebHelper\Parser\Factory;
 
 class ApacheParserTest extends PHPUnit_Framework_TestCase
@@ -36,8 +35,7 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
             ->add(new SimpleDirective('ServerRoot', '"/usr"'))
             ->add(new SimpleDirective('Listen', '80'))
             ->add(new SimpleDirective('ServerName', 'localhost'))
-            ->add(new SimpleDirective('DocumentRoot', '"/var/www/php"'))
-        ;
+            ->add(new SimpleDirective('DocumentRoot', '"/var/www/php"'));
         $data['no multi line'] = [
             $main,
             __DIR__.'/data/apache/no-multi-line.conf',
@@ -50,8 +48,7 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
         $main = new BlockDirective('main');
         $main
             ->add(new SimpleDirective('ServerRoot', '"/usr"'))
-            ->add($block)
-        ;
+            ->add($block);
         $data['one multi line'] = [
             $main,
             __DIR__.'/data/apache/one-multi-line.conf',
@@ -74,8 +71,7 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
         $main = new BlockDirective('main');
         $main
             ->add(new SimpleDirective('ServerRoot', '"/usr"'))
-            ->add($block)
-        ;
+            ->add($block);
         $data['nested multi lines'] = [
             $main,
             __DIR__.'/data/apache/nested-multi-lines.conf',

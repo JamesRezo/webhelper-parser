@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace WebHelper\Test\Parser;
 
 use PHPUnit_Framework_TestCase;
@@ -54,7 +53,7 @@ class ParserTest extends PHPUnit_Framework_TestCase
     public function dataIntegration()
     {
         return [
-            'unix' => [__DIR__.'/data/dummy.conf'],
+            'unix'    => [__DIR__.'/data/dummy.conf'],
             'windows' => [__DIR__.'/data/dos.conf'],
         ];
     }

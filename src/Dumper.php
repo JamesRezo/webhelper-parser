@@ -8,11 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace WebHelper\Parser;
 
-use WebHelper\Parser\Server\ServerInterface;
 use WebHelper\Parser\Directive\DirectiveInterface;
+use WebHelper\Parser\Server\ServerInterface;
 
 /**
  * Web server configuration generic dumper.

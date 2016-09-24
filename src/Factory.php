@@ -8,12 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace WebHelper\Parser;
 
 use Symfony\Component\Yaml\Yaml;
-use WebHelper\Parser\Server\Server;
 use WebHelper\Parser\Parser\Checker;
+use WebHelper\Parser\Server\Server;
 
 /**
  * WebHelper Factory.
@@ -83,8 +82,7 @@ class Factory
                 ->setAfterMethods($this->servers[$name]['parser']['after'])
                 ->setDumperSimpleDirective($this->servers[$name]['dumper']['simple'])
                 ->setDumperStartDirective($this->servers[$name]['dumper']['start_multiline'])
-                ->setDumperEndDirective($this->servers[$name]['dumper']['end_multiline'])
-            ;
+                ->setDumperEndDirective($this->servers[$name]['dumper']['end_multiline']);
         }
 
         return $server;

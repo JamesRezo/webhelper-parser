@@ -8,12 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace WebHelper\Test\Parser\Server;
 
 use PHPUnit_Framework_TestCase;
-use WebHelper\Parser\Server\Server;
 use WebHelper\Parser\Parser\Checker;
+use WebHelper\Parser\Server\Server;
 
 class ServerTest extends PHPUnit_Framework_TestCase
 {
@@ -28,8 +27,8 @@ class ServerTest extends PHPUnit_Framework_TestCase
     public function dataSetWrongPrefix()
     {
         return [
-            'not a string' => [null],
-            'not an absolute path' => ['null'],
+            'not a string'                  => [null],
+            'not an absolute path'          => ['null'],
             'not an existing absolute path' => [__DIR__.'/null'],
         ];
     }
@@ -54,10 +53,10 @@ class ServerTest extends PHPUnit_Framework_TestCase
     public function dataSetWrongSimpleDirective()
     {
         return [
-            'not a string' => [null],
-            'not a regexp' => ['null'],
+            'not a string'                   => [null],
+            'not a regexp'                   => ['null'],
             'missing both named subpatterns' => ['/test(?<context>.+)/'],
-            'missing key named subpattern' => ['/test(?<value>.+)/'],
+            'missing key named subpattern'   => ['/test(?<value>.+)/'],
             'missing value named subpattern' => ['/test(?<key>.+)/'],
         ];
     }
@@ -82,10 +81,10 @@ class ServerTest extends PHPUnit_Framework_TestCase
     public function dataSetWrongStartDirective()
     {
         return [
-            'not a string' => [null],
-            'not a regexp' => ['null'],
+            'not a string'                   => [null],
+            'not a regexp'                   => ['null'],
             'missing both named subpatterns' => ['/test(?<context>.+)/'],
-            'missing key named subpattern' => ['/test(?<value>.+)/'],
+            'missing key named subpattern'   => ['/test(?<value>.+)/'],
             'missing value named subpattern' => ['/test(?<key>.+)/'],
         ];
     }
@@ -140,11 +139,10 @@ class ServerTest extends PHPUnit_Framework_TestCase
             ->setPrefix(realpath(__DIR__.'/../data'))
             ->setEndMultiLine('/^<\/end>/')
             ->setStartMultiLine('/^<(?<key>\w+)(?<value>.+)>$/')
-            ->setSimpleDirective('/^(?<key>\w+)(?<value>.+)$/')
-        ;
+            ->setSimpleDirective('/^(?<key>\w+)(?<value>.+)$/');
 
         return [
-            'not configured' => [false, new Server()],
+            'not configured'   => [false, new Server()],
             'fully configured' => [true, $server],
         ];
     }
