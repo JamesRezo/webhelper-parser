@@ -100,23 +100,32 @@ class BlockDirective extends Directive implements DirectiveInterface
     public function dump(ServerInterface $server, $spaces = 0)
     {
         $config = '';
-        $value = $this->getValue() ? ' '.$this->getValue() : '';
-
-        if (!$this->isMainContext()) {
-            $config .= str_repeat(' ', $spaces).sprintf(
-                $server->getDumperStartDirective(),
-                $this->getName(),
-                $value
-            ).PHP_EOL;
-        }
 
         foreach ($this->directives as $directive) {
             $config .= $directive->dump($server, $spaces + ($this->isMainContext() ? 0 : 4));
         }
 
+        return $this->dumpBlock($server->getDumperStartDirective(), $spaces).
+            $config.
+            $this->dumpBlock($server->getDumperEndDirective(), $spaces);
+    }
+
+    /**
+     * Dumps a starting/ending block directive.
+     *
+     * @param string $directiveString the start/end directive string
+     * @param int    $spaces          the indentation spaces
+     *
+     * @return string the dumped directive
+     */
+    private function dumpBlock($directiveString, $spaces = 0)
+    {
+        $config = '';
+        $value = $this->getValue() ? ' '.$this->getValue() : '';
+
         if (!$this->isMainContext()) {
-            $config .= str_repeat(' ', $spaces).sprintf(
-                $server->getDumperEndDirective(),
+            $config = str_repeat(' ', $spaces).sprintf(
+                $directiveString,
                 $this->getName(),
                 $value
             ).PHP_EOL;

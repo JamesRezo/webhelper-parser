@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace WebHelper\Parser\Directive;
 
 use WebHelper\Parser\Parser;
@@ -105,12 +106,6 @@ class InclusionDirective extends BlockDirective implements DirectiveInterface
      */
     public function dump(ServerInterface $server, $spaces = 0)
     {
-        $value = $this->getValue() ? ' '.$this->getValue() : '';
-
-        return str_repeat(' ', $spaces).sprintf(
-            $server->getDumperSimpleDirective(),
-            $this->getName(),
-            $value
-        ).PHP_EOL;
+        return $this->dumpSimple($server, $spaces);
     }
 }

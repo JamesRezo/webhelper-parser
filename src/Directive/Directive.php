@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace WebHelper\Parser\Directive;
 
 use WebHelper\Parser\Server\ServerInterface;
@@ -98,4 +99,23 @@ abstract class Directive implements DirectiveInterface
      * @return string the dumped directive
      */
     abstract public function dump(ServerInterface $server, $spaces = 0);
+
+    /**
+     * Dumps a simple directive.
+     *
+     * @param ServerInterface $server a server instance
+     * @param int             $spaces the indentation spaces
+     *
+     * @return string the dumped simple directive
+     */
+    protected function dumpSimple(ServerInterface $server, $spaces = 0)
+    {
+        $value = $this->getValue() ? ' '.$this->getValue() : '';
+
+        return str_repeat(' ', $spaces).sprintf(
+            $server->getDumperSimpleDirective(),
+            $this->getName(),
+            $value
+        ).PHP_EOL;
+    }
 }
