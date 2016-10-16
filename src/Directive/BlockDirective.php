@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace WebHelper\Parser\Directive;
 
 use WebHelper\Parser\Server\ServerInterface;
@@ -99,9 +100,9 @@ class BlockDirective extends Directive implements DirectiveInterface
     public function dump(ServerInterface $server, $spaces = 0)
     {
         $config = '';
+        $value = $this->getValue() ? ' '.$this->getValue() : '';
 
         if (!$this->isMainContext()) {
-            $value = $this->getValue() ? ' '.$this->getValue() : '';
             $config .= str_repeat(' ', $spaces).sprintf(
                 $server->getDumperStartDirective(),
                 $this->getName(),
