@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace WebHelper\Parser\Server;
 
 use WebHelper\Parser\Parser\Checker;
@@ -225,21 +226,11 @@ class Server implements ServerInterface
      */
     public function setEndMultiLine($endMultiLine)
     {
-        if (!$this->checker->setString($endMultiLine)->getString()) {
-            throw ServerException::forInvalidMatcher(
-                $endMultiLine,
-                'The ending block directive matcher is expected to be a string. Got: %s'
-            );
-        }
-
-        if (!$this->checker->isValidRegex()) {
-            throw ServerException::forInvalidMatcher(
-                $endMultiLine,
-                'The ending block directive matcher is expected to be a regexp.'
-            );
-        }
-
-        $this->endMultiLine = $endMultiLine;
+        $this->endMultiLine = $this->setRegexDirective(
+            $endMultiLine,
+            'The ending block directive matcher is expected to be a string. Got: %s',
+            'The ending block directive matcher is expected to be a regexp.'
+        );
 
         return $this;
     }
@@ -290,23 +281,43 @@ class Server implements ServerInterface
      */
     public function setInclusionDirective($inclusionDirective)
     {
-        if (!$this->checker->setString($inclusionDirective)->getString()) {
+        $this->inclusionDirective = $this->setRegexDirective(
+            $inclusionDirective,
+            'The inclusion directive matcher is expected to be a string. Got: %s',
+            'The inclusion directive matcher is expected to be a regexp.'
+        );
+
+        return $this;
+    }
+
+    /**
+     * Sets the regular expression directive.
+     *
+     * @param string $directive the directive string
+     * @param string $message1  message exception if the matcher is not a string
+     * @param string $message2  message exception if the matcher is not a valid regex
+     *
+     * @throws ServerException if the directive matcher is invalid
+     *
+     * @return string the regular expression directive
+     */
+    private function setRegexDirective($directive, $message1, $message2)
+    {
+        if (!$this->checker->setString($directive)->getString()) {
             throw ServerException::forInvalidMatcher(
-                $inclusionDirective,
-                'The inclusion directive matcher is expected to be a string. Got: %s'
+                $directive,
+                $message1
             );
         }
 
         if (!$this->checker->isValidRegex()) {
             throw ServerException::forInvalidMatcher(
-                $inclusionDirective,
-                'The inclusion directive matcher is expected to be a regexp.'
+                $directive,
+                $message2
             );
         }
 
-        $this->inclusionDirective = $inclusionDirective;
-
-        return $this;
+        return $directive;
     }
 
     /**
