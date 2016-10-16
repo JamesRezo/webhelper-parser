@@ -91,10 +91,10 @@ class Descriptor
     /**
      * Gets the relative path if it matches against another path.
      *
-     * @param      string  $path     The path
-     * @param      string  $against  The path to match against
+     * @param string $path    The path
+     * @param string $against The path to match against
      *
-     * @return     null|string  The relative path.
+     * @return null|string The relative path
      */
     private function getRelative($path, $against)
     {
