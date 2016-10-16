@@ -13,7 +13,7 @@
     "require": {
         "php": "^5.5 || ^7.0",
         "webmozart/glob": "^4.1",
-        "symfony/yaml": "^2.8 || ^3.1",
+        "symfony/yaml": "^3.1",
         "league/uri": "^4.2"
     },
     "autoload": {

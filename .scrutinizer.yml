@@ -3,6 +3,8 @@ checks:
         code_rating: true
         duplication: true
 build:
+    environment:
+        php: '5.5.38'
     tests:
         override:
             -

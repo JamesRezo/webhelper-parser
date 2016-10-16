@@ -17,7 +17,7 @@ class DescriptorTest extends PHPUnit_Framework_TestCase
             ['localhost', [
                 '/~user' => '/home/user/public_html',
                 '/myapp' => '/opt/apps/myapp/web',
-                '/' => '/var/www',
+                '/'      => '/var/www',
             ]],
         ];
 
@@ -27,7 +27,7 @@ class DescriptorTest extends PHPUnit_Framework_TestCase
             ['localhost', [
                 '/~user' => '/home/user/public_html',
                 '/myapp' => '/opt/apps/myapp/web',
-                '/' => '/var/www',
+                '/'      => '/var/www',
             ]],
         ];
 
@@ -35,10 +35,10 @@ class DescriptorTest extends PHPUnit_Framework_TestCase
             ['http://localhost/myapp/app.php', 'http://localhost/myaliasedapp/app.php'],
             '/opt/apps/myapp/web/app.php',
             ['localhost', [
-                '/~user' => '/home/user/public_html',
-                '/myapp' => '/opt/apps/myapp/web',
+                '/~user'        => '/home/user/public_html',
+                '/myapp'        => '/opt/apps/myapp/web',
                 '/myaliasedapp' => '/opt/apps/myapp/web',
-                '/' => '/var/www',
+                '/'             => '/var/www',
             ]],
         ];
 
@@ -46,9 +46,9 @@ class DescriptorTest extends PHPUnit_Framework_TestCase
             ['https://example.com'],
             '/var/www',
             ['example.com:443', [
-                '/images' => '/var/secured/icons',
+                '/images'     => '/var/secured/icons',
                 '/images/fun' => '/var/secured_but_fun/icons',
-                '/' => '/var/www',
+                '/'           => '/var/www',
             ]],
         ];
 
@@ -56,9 +56,9 @@ class DescriptorTest extends PHPUnit_Framework_TestCase
             ['https://example.com/images/fun/cat.gif'],
             '/var/secured_but_fun/icons/cat.gif',
             ['example.com:443', [
-                '/images' => '/var/secured/icons',
+                '/images'     => '/var/secured/icons',
                 '/images/fun' => '/var/secured_but_fun/icons',
-                '/' => '/var/www',
+                '/'           => '/var/www',
             ]],
         ];
 
@@ -85,7 +85,7 @@ class DescriptorTest extends PHPUnit_Framework_TestCase
             ['localhost', [
                 '/~user' => '/home/user/public_html',
                 '/myapp' => '/opt/apps/myapp/web',
-                '/' => '/var/www',
+                '/'      => '/var/www',
             ]],
         ];
 
@@ -95,7 +95,7 @@ class DescriptorTest extends PHPUnit_Framework_TestCase
             ['localhost', [
                 '/~user' => '/home/user/public_html',
                 '/myapp' => '/opt/apps/myapp/web',
-                '/' => '/var/www',
+                '/'      => '/var/www',
             ]],
         ];
 
@@ -104,9 +104,9 @@ class DescriptorTest extends PHPUnit_Framework_TestCase
             'http://localhost:8080/images/alert.png',
             ['localhost:8080', [
                 '/images/fun' => '/var/funny',
-                '/images' => '/var/icons',
-                '/~user' => '/home/user/public_html',
-                '/' => '/var/www',
+                '/images'     => '/var/icons',
+                '/~user'      => '/home/user/public_html',
+                '/'           => '/var/www',
             ]],
         ];
 
@@ -115,9 +115,9 @@ class DescriptorTest extends PHPUnit_Framework_TestCase
             'http://localhost:8080/images/fun/lol.jpg',
             ['localhost:8080', [
                 '/images/fun' => '/var/funny',
-                '/images' => '/var/icons',
-                '/~user' => '/home/user/public_html',
-                '/' => '/var/www',
+                '/images'     => '/var/icons',
+                '/~user'      => '/home/user/public_html',
+                '/'           => '/var/www',
             ]],
         ];
 
@@ -125,9 +125,9 @@ class DescriptorTest extends PHPUnit_Framework_TestCase
             '/var/secured/icons/fun/ninja.png',
             'https://example.com/images/fun/ninja.png',
             ['example.com:443', [
-                '/images' => '/var/secured/icons',
+                '/images'     => '/var/secured/icons',
                 '/images/fun' => '/var/secured_but_fun/icons',
-                '/' => '/var/www',
+                '/'           => '/var/www',
             ]],
         ];
 
