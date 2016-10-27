@@ -43,6 +43,11 @@ servers:
             ServerName:
                 class: HostDirective
                 since: ''
+            Directory:
+                since: ''
+            IfModule:
+                class: ContextDirective
+                since: '2.1'
     nginx:
         minimum_supported_version: '1.0'
         defaults:

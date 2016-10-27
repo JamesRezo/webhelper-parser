@@ -12,7 +12,9 @@ namespace WebHelper\Test\Parser;
 
 use PHPUnit_Framework_TestCase;
 use WebHelper\Parser\Directive\BlockDirective;
+use WebHelper\Parser\Directive\ContextDirective;
 use WebHelper\Parser\Directive\SimpleDirective;
+use WebHelper\Parser\Directive\HostDirective;
 use WebHelper\Parser\Factory;
 
 class ApacheParserTest extends PHPUnit_Framework_TestCase
@@ -34,7 +36,8 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
         $main
             ->add(new SimpleDirective('ServerRoot', '"/usr"'))
             ->add(new SimpleDirective('Listen', '80'))
-            ->add(new SimpleDirective('ServerName', 'localhost'))
+            ->add(new SimpleDirective('NameVirtualHost', '*:80'))
+            ->add(new HostDirective('ServerName', 'localhost'))
             ->add(new SimpleDirective('DocumentRoot', '"/var/www/php"'));
         $data['no multi line'] = [
             $main,
@@ -54,8 +57,8 @@ class ApacheParserTest extends PHPUnit_Framework_TestCase
             __DIR__.'/data/apache/one-multi-line.conf',
         ];
 
-        $block = new BlockDirective('IfModule', 'log_config_module');
-        $nestedBlock = new BlockDirective('IfModule', 'logio_module');
+        $block = new ContextDirective('IfModule', 'log_config_module');
+        $nestedBlock = new ContextDirective('IfModule', 'logio_module');
         $nestedBlock
             ->add(new SimpleDirective(
                 'LogFormat',

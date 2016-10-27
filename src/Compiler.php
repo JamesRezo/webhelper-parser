@@ -161,7 +161,7 @@ class Compiler
         $class = 'WebHelper\Parser\Directive\BlockDirective';
         $known = $this->parser->getServer()->getKnownDirectives();
         if (in_array($context, array_keys($known))) {
-            if (isset($known[$key]['class'])) {
+            if (isset($known[$context]['class'])) {
                 $class = 'WebHelper\Parser\Directive\\'.$known[$context]['class'];
             }
         }
