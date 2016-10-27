@@ -3,8 +3,9 @@ servers:
     apache:
         minimum_supported_version: '2.0'
         defaults:
-            prefix: '/usr/local/apache2'
+            prefix: '/usr/local/apache2' #"c:/Program Files/Apache Group/Apache2"
             configuration_file: 'PREFIX/conf/httpd.conf'
+            document_root: 'PREFIX/htdocs'
         controlers: ['httpd', 'apachectl', 'apache2ctl']
         switch:
             detect: ' -V'
@@ -15,7 +16,6 @@ servers:
             simple: '/^(?<key>\w+)(?<value>.+)$/'
             start_multiline: '/^<(?<key>\w+)(?<value>[^>]*)>$/'
             end_multiline: '/^<\/%s>/'
-            inclusion: '/^Include(Optional)?$/'
         parser:
             before: ['deleteComments']
             after: ['continuingDirectives', 'deleteBlankLines']
@@ -23,11 +23,32 @@ servers:
             simple: '%s%s'
             start_multiline: '<%s%s>'
             end_multiline: '</%s>'
+        descriptors:
+            host: ['ServerName', 'ServerAlias']
+            paths: ['ServerRoot', 'DocumentRoot', 'Alias(Match)?']
+            proxies: []
+            grants: ['Allow', 'Deny', 'Require']
+        known_directives:
+            Include:
+                class: InclusionDirective
+                since: ''
+            IncludeOptional:
+                class: InclusionDirective
+                since: '2.3.6'
+            NameVirtualHost:
+                obsolete: '2.3.11'
+            Alias:
+                class: PathDirective
+                since: ''
+            ServerName:
+                class: HostDirective
+                since: ''
     nginx:
         minimum_supported_version: '1.0'
         defaults:
             prefix: '/usr/local/nginx'
             configuration_file: 'PREFIX/conf/nginx.conf'
+            document_root: 'PREFIX/html'
         controlers: ['nginx']
         switch:
             detect: ' -V 2>&1'
@@ -38,7 +59,6 @@ servers:
             simple: '/^(?<key>\w+)(?<value>[^;]+);$/'
             start_multiline: '/^(?<key>\w+)(?<value>[^\{]+)\{$/'
             end_multiline: '/^\}$/'
-            inclusion: '/^include$/'
         parser:
             before: ['deleteComments', 'bracesPlacedOnePerLine']
             after: ['deleteBlankLines']
@@ -46,3 +66,15 @@ servers:
             simple: '%s%s;'
             start_multiline: '%s%s {'
             end_multiline: '}'
+        descriptors:
+            host: ['server_name']
+            paths: ['root', 'location']
+            proxies: []
+            grants: ['satisfy']
+        known_directives:
+            include:
+                class: InclusionDirective
+                since: ''
+            server_name:
+                class: HostDirective
+                since: ''

@@ -87,20 +87,6 @@ interface ServerInterface
     public function setSimpleDirective($simpleDirective);
 
     /**
-     * Gets the regexp that will match the inclusion directives.
-     *
-     * @return string the regexp that will match the inclusion directives
-     */
-    public function getInclusionDirective();
-
-    /**
-     * Sets the regexp that will match the inclusion directives.
-     *
-     * @param string $inclusionDirective the regexp that will match the inclusion directives
-     */
-    public function setInclusionDirective($inclusionDirective);
-
-    /**
      * Gets the list of binaries that can be run to analyze.
      *
      * @return array the list of binaries that can be run
@@ -197,4 +183,18 @@ interface ServerInterface
      * @param string $endMultiLine the ending block directive syntax when dumped
      */
     public function setDumperEndDirective($endMultiLine);
+
+    /**
+     * Gets the known directives of the server.
+     *
+     * @return array the known directives of the server
+     */
+    public function getKnownDirectives();
+
+    /**
+     * Sets the known directives of the server.
+     *
+     * @param array $knownDirectives the known directives of the server
+     */
+    public function setKnownDirectives(array $knownDirectives);
 }

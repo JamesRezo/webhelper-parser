@@ -118,6 +118,13 @@ class Server implements ServerInterface
     private $dumperEndDirective = '';
 
     /**
+     * The known directives of the server
+     *
+     * @var array
+     */
+    private $knownDirectives = [];
+
+    /**
      * Sets the Checker instance.
      *
      * @param Checker $checker a Checker instance
@@ -260,32 +267,6 @@ class Server implements ServerInterface
         )) {
             $this->simpleDirective = $simpleDirective;
         }
-
-        return $this;
-    }
-
-    /**
-     * Gets the regexp that will match the inclusion directives.
-     *
-     * @return string the regexp that will match the inclusion directives
-     */
-    public function getInclusionDirective()
-    {
-        return $this->inclusionDirective;
-    }
-
-    /**
-     * Sets the regexp that will match the inclusion directives.
-     *
-     * @param string $inclusionDirective the regexp that will match the inclusion directives
-     */
-    public function setInclusionDirective($inclusionDirective)
-    {
-        $this->inclusionDirective = $this->setRegexDirective(
-            $inclusionDirective,
-            'The inclusion directive matcher is expected to be a string. Got: %s',
-            'The inclusion directive matcher is expected to be a regexp.'
-        );
 
         return $this;
     }
@@ -500,6 +481,28 @@ class Server implements ServerInterface
     public function setDumperEndDirective($endMultiLine)
     {
         $this->dumperEndDirective = $endMultiLine;
+
+        return $this;
+    }
+
+    /**
+     * Gets the known directives of the server.
+     *
+     * @return array the known directives of the server
+     */
+    public function getKnownDirectives()
+    {
+        return $this->knownDirectives;
+    }
+
+    /**
+     * Sets the known directives of the server.
+     *
+     * @param array $knownDirectives the known directives of the server
+     */
+    public function setKnownDirectives(array $knownDirectives)
+    {
+        $this->knownDirectives = $knownDirectives;
 
         return $this;
     }

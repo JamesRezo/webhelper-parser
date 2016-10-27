@@ -50,8 +50,7 @@ class Factory
         $compiler = new Compiler(
             $parser->getServer()->getStartMultiLine(),
             $parser->getServer()->getEndMultiLine(),
-            $parser->getServer()->getSimpleDirective(),
-            $parser->getServer()->getInclusionDirective()
+            $parser->getServer()->getSimpleDirective()
         );
 
         $parser->setCompiler($compiler);
@@ -75,14 +74,15 @@ class Factory
                 ->setStartMultiLine($this->servers[$name]['directives']['start_multiline'])
                 ->setEndMultiLine($this->servers[$name]['directives']['end_multiline'])
                 ->setSimpleDirective($this->servers[$name]['directives']['simple'])
-                ->setInclusionDirective($this->servers[$name]['directives']['inclusion'])
                 ->setBinaries($this->servers[$name]['controlers'])
                 ->setDetectionParameter($this->servers[$name]['switch']['detect'])
                 ->setBeforeMethods($this->servers[$name]['parser']['before'])
                 ->setAfterMethods($this->servers[$name]['parser']['after'])
                 ->setDumperSimpleDirective($this->servers[$name]['dumper']['simple'])
                 ->setDumperStartDirective($this->servers[$name]['dumper']['start_multiline'])
-                ->setDumperEndDirective($this->servers[$name]['dumper']['end_multiline']);
+                ->setDumperEndDirective($this->servers[$name]['dumper']['end_multiline'])
+                ->setKnownDirectives($this->servers[$name]['known_directives'])
+            ;
         }
 
         return $server;

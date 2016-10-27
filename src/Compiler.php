@@ -10,8 +10,6 @@
  */
 namespace WebHelper\Parser;
 
-use WebHelper\Parser\Directive\BlockDirective;
-use WebHelper\Parser\Directive\InclusionDirective;
 use WebHelper\Parser\Directive\SimpleDirective;
 use WebHelper\Parser\Exception\InvalidConfigException;
 
@@ -51,26 +49,17 @@ class Compiler
     private $simpleDirective;
 
     /**
-     * The string to match an inclusion Directive.
-     *
-     * @var string
-     */
-    private $inclusionDirective;
-
-    /**
      * Constructor.
      *
      * @param string $startMultiLine     match as a starting multi-line directive
      * @param string $endMultiLine       match as an ending multi-line directive
      * @param string $simpleDirective    match a simple directive
-     * @param string $inclusionDirective match an inclusion directive
      */
-    public function __construct($startMultiLine, $endMultiLine, $simpleDirective, $inclusionDirective)
+    public function __construct($startMultiLine, $endMultiLine, $simpleDirective)
     {
         $this->startMultiLine = $startMultiLine;
         $this->endMultiLine = $endMultiLine;
         $this->simpleDirective = $simpleDirective;
-        $this->inclusionDirective = $inclusionDirective;
     }
 
     /**
@@ -169,7 +158,14 @@ class Compiler
      */
     private function buildBlockDirective($context, $contextValue, $lines)
     {
-        $block = new BlockDirective($context, $contextValue);
+        $class = 'WebHelper\Parser\Directive\BlockDirective';
+        $known = $this->parser->getServer()->getKnownDirectives();
+        if (in_array($context, array_keys($known))) {
+            if (isset($known[$key]['class'])) {
+                $class = 'WebHelper\Parser\Directive\\'.$known[$context]['class'];
+            }
+        }
+        $block = new $class($context, $contextValue);
         foreach ($lines as $directive) {
             $block->add($directive);
         }
@@ -191,8 +187,12 @@ class Compiler
      */
     private function buildSimpleDirective($key, $value)
     {
-        if (preg_match($this->inclusionDirective, $key)) {
-            return new InclusionDirective($key, $value, $this->parser);
+        $known = $this->parser->getServer()->getKnownDirectives();
+        if (in_array($key, array_keys($known))) {
+            if (isset($known[$key]['class'])) {
+                $class = 'WebHelper\Parser\Directive\\'.$known[$key]['class'];
+                return new $class($key, $value, $this->parser);
+            }
         }
 
         return new SimpleDirective($key, $value);
