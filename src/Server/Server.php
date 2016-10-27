@@ -62,13 +62,6 @@ class Server implements ServerInterface
     private $simpleDirective = '';
 
     /**
-     * The string to match an inclusion directive.
-     *
-     * @var string
-     */
-    private $inclusionDirective = '';
-
-    /**
      * binaries that can be used to control the webserver.
      *
      * @var array
